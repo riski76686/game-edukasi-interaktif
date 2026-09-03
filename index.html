@@ -1,55 +1,145 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Game Pembelajaran Interaktif - Karya Edukasi Siswa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ruang EduGame - Petualangan Belajar & Game Interaktif Siswa</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            brand: ['Fredoka', 'cursive', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            pastel: {
+              yellow: '#FEF08A',
+              pink: '#FBCFE8',
+              sky: '#BAE6FD',
+              mint: '#A7F3D0',
+              purple: '#E9D5FF',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAFC;
     }
     .font-brand {
       font-family: 'Fredoka', cursive, sans-serif;
     }
+
+    /* Animasi Mengambang Lucu */
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+    .animate-float {
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+    .animate-float-delayed {
+      animation: gentleFloat 5s ease-in-out 1.5s infinite;
+    }
+
+    /* Efek tombol 3D Arcade ramah anak */
+    .btn-bouncy {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 0 #4338CA;
+    }
+    .btn-bouncy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #4338CA;
+    }
+    .btn-bouncy:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #4338CA;
+    }
+
+    .btn-bouncy-amber {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 0 #D97706;
+    }
+    .btn-bouncy-amber:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #D97706;
+    }
+    .btn-bouncy-amber:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #D97706;
+    }
+
+    /* Scrollbar Cantik */
     .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
       height: 6px;
+      width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 8px;
+      background: #F1F5F9;
+      border-radius: 99px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 8px;
+      background: #CBD5E1;
+      border-radius: 99px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-purple-500 selection:text-white">
 
-  <!-- NAVBAR / HEADER -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white text-xl shadow-md shadow-indigo-200">
-          🎮
+  <!-- LATAR BELAKANG DEKORATIF DENGAN BUBBLE LEMBUT -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-purple-200/50 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-20 w-80 h-80 bg-sky-200/50 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-1/4 w-96 h-96 bg-pink-200/40 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- NAVBAR MODERN KEKINIAN -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-purple-100/80 shadow-xs transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between">
+      
+      <!-- Logo dan Maskot Portofolio -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-purple-200 group-hover:scale-105 group-hover:rotate-3 transition-transform">
+          🚀
         </div>
         <div>
-          <a href="#" class="font-brand text-xl font-bold text-slate-900 tracking-tight block leading-none">Ruang EduGame</a>
-          <span class="text-[11px] font-semibold text-indigo-600">Portofolio Game Interaktif Siswa</span>
+          <div class="flex items-center gap-2">
+            <h1 class="font-brand text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-none group-hover:text-indigo-600 transition-colors">
+              Ruang EduGame
+            </h1>
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300">
+              KIDS ARCADE 🌟
+            </span>
+          </div>
+          <p class="text-[11px] sm:text-xs font-semibold text-purple-600">Portofolio Game Interaktif & Karya Pembelajaran</p>
         </div>
-      </div>
+      </a>
 
+      <!-- Aksi Navbar (Sound FX & Tambah Game) -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <button onclick="openAddGameModal()" class="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-indigo-200 transition-transform active:scale-95">
-          <span>➕</span>
+        <!-- Tombol Efek Suara -->
+        <button id="soundToggleBtn" onclick="toggleSoundFx()" class="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 active:scale-95 flex items-center justify-center text-lg border border-slate-200 transition-all" title="Nyalakan/Matikan Suara Klik">
+          <span id="soundIcon">🔊</span>
+        </button>
+
+        <!-- Tombol Tambah Game Baru -->
+        <button onclick="openAddGameModal()" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl text-xs sm:text-sm font-brand font-bold shadow-md shadow-indigo-200 active:scale-95 transition-all">
+          <span class="text-base">✨</span>
           <span class="hidden sm:inline">Tambah Game Baru</span>
           <span class="sm:hidden">Tambah</span>
         </button>
@@ -57,171 +147,315 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative bg-gradient-to-b from-indigo-50/70 via-white to-slate-50 py-10 sm:py-14 border-b border-slate-200/60 overflow-hidden">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100/80 text-indigo-800 mb-4 border border-indigo-200/80 shadow-xs">
-        ✨ Koleksi Media Pembelajaran Berbasis Permainan
-      </span>
-      <h1 class="font-brand text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
-        Belajar Jadi Menyenangkan dengan <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Game Edukasi</span>
-      </h1>
-      <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed mb-6">
-        Kumpulan permainan digital interaktif yang dirancang untuk melatih logika berpikir, kecepatan berhitung, serta kemampuan kognitif anak secara bertahap dan menyenangkan.
+  <!-- HERO SECTION INTERAKTIF -->
+  <section class="relative pt-8 pb-10 sm:pt-12 sm:pb-14 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+      
+      <!-- Lencana Sorotan Sambutan -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-white/90 text-purple-800 border-2 border-purple-200 shadow-sm mb-5 animate-float">
+        <span>🎮</span>
+        <span>Bermain Seru, Berpikir Cepat, Belajar Jadi Asyik!</span>
+        <span>✨</span>
+      </div>
+
+      <!-- Judul Besar Menarik -->
+      <h2 class="font-brand text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto mb-4">
+        Jelajahi Dunia <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">Permainan Edukasi</span> Paling Seru!
+      </h2>
+      <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
+        Kumpulan game interaktif ramah anak untuk melatih logika matematika, ketangkasan sains, dan kemampuan berpikir kritis secara menyenangkan!
       </p>
 
-      <!-- BAR PENCARIAN & STATISTIK RINGKAS -->
-      <div class="max-w-xl mx-auto flex gap-2">
-        <div class="relative flex-1">
-          <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400">🔍</span>
-          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Cari judul game, topik, atau mata pelajaran..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white shadow-xs">
+      <!-- SPOTLIGHT GAME UNGGULAN (BANNER KARTU KRISTAL ANGKA) -->
+      <div class="max-w-3xl mx-auto bg-gradient-to-r from-purple-900 via-indigo-900 to-sky-900 text-white rounded-3xl p-5 sm:p-7 shadow-2xl border-4 border-amber-300 relative overflow-hidden text-left mb-6 group">
+        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex flex-col sm:flex-row items-center gap-5 relative z-10">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-amber-400 flex items-center justify-center text-4xl sm:text-5xl shadow-lg shadow-amber-500/30 flex-shrink-0 animate-float-delayed border-2 border-white">
+            💎
+          </div>
+          <div class="flex-1 text-center sm:text-left">
+            <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-purple-950 text-[11px] font-extrabold font-brand tracking-wide">
+                GAME UTAMA PILIHAN ⭐
+              </span>
+              <span class="text-xs text-purple-200 font-semibold">Kelas 1 - 3 SD</span>
+            </div>
+            <h3 class="font-brand text-xl sm:text-2xl font-bold text-white mb-1.5 leading-snug">
+              Petualangan Kristal Angka
+            </h3>
+            <p class="text-xs sm:text-sm text-purple-200 line-clamp-2 leading-relaxed mb-4">
+              Latihan penalaran bilangan relasi A + B = C dengan 4 pulau kristal ajaib, pulau mahkota, serta pencatatan otomatis hasil belajar siswa.
+            </p>
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+              <button onclick="launchGame('kristal-angka')" class="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 active:scale-95 text-purple-950 font-brand font-bold rounded-2xl text-sm transition-all shadow-lg flex items-center gap-2">
+                <span>▶ Mainkan Sekarang</span>
+              </button>
+              <a href="https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 bg-white/15 hover:bg-white/25 text-white font-semibold rounded-2xl text-xs transition-colors flex items-center gap-1.5">
+                <span>Tab Baru ↗</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- KONTEN UTAMA: FILTER & DAFTAR GAME -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-    <!-- FILTER KATEGORI -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-3 custom-scrollbar mb-6">
-      <button onclick="filterCategory('all')" id="tab-all" class="category-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-xs">
-        Semua Kategori
-      </button>
-      <button onclick="filterCategory('math')" id="tab-math" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
-        🧮 Matematika
-      </button>
-      <button onclick="filterCategory('science')" id="tab-science" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
-        🔬 Sains & Alam
-      </button>
-      <button onclick="filterCategory('language')" id="tab-language" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
-        📚 Bahasa & Literasi
-      </button>
-      <button onclick="filterCategory('logic')" id="tab-logic" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
-        🧩 Teka-teki & Logika
-      </button>
+  <!-- BAGIAN DAFTAR PERMAINAN: PENCARIAN & KATEGORI -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full">
+    
+    <!-- BAR PENCARIAN & STATISTIK -->
+    <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-purple-100 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Input Pencarian -->
+      <div class="relative w-full md:w-96">
+        <span class="absolute inset-y-0 left-4 flex items-center text-lg pointer-events-none">🔍</span>
+        <input 
+          type="text" 
+          id="searchInput" 
+          oninput="handleSearch(this.value)" 
+          placeholder="Cari nama game, matematika, sains..." 
+          class="w-full pl-12 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm font-semibold transition-all"
+        >
+      </div>
+
+      <!-- Kategori Filter Bubbly -->
+      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 custom-scrollbar">
+        <button onclick="filterCategory('all')" id="tab-all" class="category-btn active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-indigo-600 text-white shadow-md shadow-indigo-100 flex-shrink-0">
+          Semua (All) 🌟
+        </button>
+        <button onclick="filterCategory('math')" id="tab-math" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-700 flex-shrink-0">
+          🧮 Matematika
+        </button>
+        <button onclick="filterCategory('science')" id="tab-science" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-700 flex-shrink-0">
+          🔬 Sains
+        </button>
+        <button onclick="filterCategory('language')" id="tab-language" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-700 flex-shrink-0">
+          📚 Bahasa
+        </button>
+        <button onclick="filterCategory('logic')" id="tab-logic" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-700 flex-shrink-0">
+          🧩 Teka-Teki
+        </button>
+      </div>
     </div>
 
     <!-- GRID KARTU PERMAINAN -->
-    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Kartu-kartu game diisi oleh JavaScript -->
+    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+      <!-- Diisi oleh JavaScript -->
     </div>
 
-    <!-- TAMPILAN KOSONG / EMPTY STATE -->
-    <div id="emptyState" class="hidden text-center py-16">
-      <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3">
-        🔍
+    <!-- TAMPILAN JIKA TIDAK DITEMUKAN -->
+    <div id="emptyState" class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300 p-8">
+      <div class="w-20 h-20 bg-purple-50 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 animate-bounce">
+        🧐
       </div>
-      <h3 class="font-brand text-lg font-bold text-slate-800">Game tidak ditemukan</h3>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1">Coba gunakan kata kunci pencarian yang lain atau reset filter.</p>
+      <h3 class="font-brand text-xl font-bold text-slate-800 mb-1">Wah, Game Belum Ditemukan!</h3>
+      <p class="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto mb-4">Coba cari kata kunci lainnya atau ubah pilihan kategori di atas.</p>
+      <button onclick="filterCategory('all'); document.getElementById('searchInput').value='';" class="px-4 py-2 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-800 font-brand font-bold text-xs">
+        Tampilkan Semua Game 🚀
+      </button>
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4">
-      <p class="font-semibold text-slate-700 font-brand text-sm">Ruang EduGame &copy; Portal Portofolio Game Siswa</p>
-      <p class="mt-1">Dibuat dengan ❤️ untuk mendukung pembelajaran mandiri yang aktif, kreatif, dan menyenangkan.</p>
+  <!-- FOOTER RAMAH ANAK -->
+  <footer class="bg-white border-t border-purple-100 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🎒</span>
+        <span class="font-brand text-sm font-bold text-slate-800">Ruang EduGame Siswa</span>
+        <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md">Aktif & Siap Main</span>
+      </div>
+      <p class="text-slate-500">
+        Dirancang dengan penuh semangat untuk mendukung pendidikan merdeka belajar yang kreatif dan interaktif.
+      </p>
     </div>
   </footer>
 
-  <!-- MODAL PEMUTAR GAME (EMBED PLAYER) -->
-  <div id="playerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
-    <div class="bg-white rounded-3xl w-full max-w-5xl h-[92vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
-      <!-- Modal Header -->
-      <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between">
-        <div class="flex items-center gap-2.5 overflow-hidden">
-          <span id="playerEmoji" class="text-2xl">🎮</span>
+  <!-- MODAL PEMUTAR GAME (TABLET / ARCADE CONSOLE STYLE) -->
+  <div id="playerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 hidden transition-all duration-300">
+    <div class="bg-slate-900 rounded-[32px] w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden shadow-2xl border-4 border-purple-400/50">
+      
+      <!-- Panel Header Konsol -->
+      <div class="px-4 sm:px-6 py-3.5 bg-gradient-to-r from-slate-900 via-purple-950 to-slate-900 text-white flex items-center justify-between border-b border-purple-900/60">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div id="playerEmoji" class="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-2xl border border-white/20">🎮</div>
           <div class="truncate">
-            <h3 id="playerTitle" class="font-bold text-sm sm:text-base leading-tight truncate">Judul Game</h3>
-            <p id="playerCategory" class="text-[11px] text-slate-400 font-medium">Kategori Game</p>
+            <h3 id="playerTitle" class="font-brand font-bold text-base sm:text-lg leading-tight text-white truncate">Judul Game</h3>
+            <p id="playerCategory" class="text-[11px] text-purple-300 font-semibold truncate">Kategori Game</p>
           </div>
         </div>
-        
+
+        <!-- Tombol Aksi Kontrol Pemutar -->
         <div class="flex items-center gap-2">
-          <a id="playerDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors" title="Buka di tab baru">
+          <!-- Refresh Game -->
+          <button onclick="reloadCurrentGame()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1" title="Muat Ulang Permainan">
+            <span>🔄</span>
+            <span class="hidden md:inline">Ulang</span>
+          </button>
+
+          <!-- Buka Tab Baru -->
+          <a id="playerDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1 shadow-xs" title="Buka di tab peramban baru">
             <span>↗</span>
-            <span class="hidden sm:inline">Buka Tab Baru</span>
+            <span class="hidden md:inline">Tab Baru</span>
           </a>
-          <button onclick="closePlayerModal()" class="w-8 h-8 rounded-xl bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center font-bold text-sm transition-colors" title="Tutup">
+
+          <!-- Tutup Pemutar -->
+          <button onclick="closePlayerModal()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center font-bold text-base transition-transform active:scale-95 ml-1" title="Tutup Game">
             ✕
           </button>
         </div>
       </div>
 
-      <!-- Iframe Container -->
-      <div class="flex-1 bg-slate-100 relative">
-        <div id="iframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-white z-10 transition-opacity">
-          <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-3"></div>
-          <p class="text-xs sm:text-sm font-semibold tracking-wide text-slate-300">Memuat game edukasi...</p>
+      <!-- Area Layar Iframe Game -->
+      <div class="flex-1 bg-slate-950 relative flex items-center justify-center">
+        <!-- Indikator Loading Lucu -->
+        <div id="iframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-white z-10 transition-opacity duration-300">
+          <div class="w-14 h-14 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p class="font-brand text-base font-bold text-amber-300 animate-pulse">Menyiapkan Arena Bermain...</p>
+          <span class="text-xs text-slate-400 mt-1">Harap tunggu sebentar ya! 🚀</span>
         </div>
-        <iframe id="gameIframe" src="" class="w-full h-full border-0" allow="autoplay; fullscreen; microphone; camera" onload="hideIframeLoader()"></iframe>
+
+        <iframe 
+          id="gameIframe" 
+          src="" 
+          class="w-full h-full border-0 bg-white" 
+          allow="autoplay; fullscreen; microphone; camera; clipboard-read; clipboard-write" 
+          onload="hideIframeLoader()"
+        ></iframe>
       </div>
     </div>
   </div>
 
   <!-- MODAL TAMBAH GAME BARU -->
   <div id="addGameModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-100">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border-4 border-purple-200 animate-float-delayed">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="font-brand text-lg font-bold text-slate-900 flex items-center gap-2">
-          <span>➕</span> Tambah Game ke Portofolio
-        </h3>
-        <button onclick="closeAddGameModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 font-bold text-xs flex items-center justify-center">✕</button>
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-purple-100 flex items-center justify-center text-xl">✨</div>
+          <h3 class="font-brand text-xl font-bold text-slate-900">
+            Tambah Koleksi Game Baru
+          </h3>
+        </div>
+        <button onclick="closeAddGameModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 font-bold text-xs flex items-center justify-center transition-colors">✕</button>
       </div>
 
-      <form id="addGameForm" onsubmit="saveNewGame(event)" class="space-y-3 text-xs sm:text-sm">
+      <form id="addGameForm" onsubmit="saveNewGame(event)" class="space-y-3.5 text-xs sm:text-sm">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Judul Game:</label>
-          <input type="text" id="newTitle" required placeholder="Contoh: Petualangan Kristal Angka" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <label class="block font-bold text-slate-700 mb-1">Judul Permainan:</label>
+          <input type="text" id="newTitle" required placeholder="Contoh: Petualangan Kristal Angka" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none font-medium">
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Ikon / Emoji:</label>
-            <input type="text" id="newEmoji" required value="🎮" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center">
+            <label class="block font-bold text-slate-700 mb-1">Ikon / Emoji Game:</label>
+            <input type="text" id="newEmoji" required value="🎮" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none text-center text-lg">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Kategori:</label>
-            <select id="newCategory" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+            <select id="newCategory" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none font-bold bg-white">
               <option value="math">🧮 Matematika</option>
               <option value="science">🔬 Sains & Alam</option>
-              <option value="language">📚 Bahasa</option>
-              <option value="logic">🧩 Logika</option>
+              <option value="language">📚 Bahasa & Kata</option>
+              <option value="logic">🧩 Asah Logika</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Sasaran Usia / Kelas:</label>
-          <input type="text" id="newAgeGroup" required placeholder="Contoh: Kelas 1 - 3 SD (6-9 Tahun)" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <label class="block font-bold text-slate-700 mb-1">Tingkat Kelas / Usia Anak:</label>
+          <input type="text" id="newAgeGroup" required placeholder="Contoh: Kelas 1 - 3 SD (6-9 Tahun)" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none font-medium">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Deskripsi Singkat:</label>
-          <textarea id="newDesc" rows="2" required placeholder="Jelaskan ringkas materi & tujuan permainan..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+          <textarea id="newDesc" rows="2" required placeholder="Ceritakan singkat tujuan dan keseruan game ini..." class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none font-medium"></textarea>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Tautan Web Game (URL):</label>
-          <input type="url" id="newUrl" required placeholder="https://script.google.com/..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          <p class="text-[10px] text-slate-500 mt-0.5">Mendukung link Google Apps Script (/exec) atau website HTML lainnya.</p>
+          <label class="block font-bold text-slate-700 mb-1">Tautan Web App (Google Apps Script / URL):</label>
+          <input type="url" id="newUrl" required placeholder="https://script.google.com/.../exec" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none font-mono text-xs">
+          <p class="text-[11px] text-slate-400 mt-1">Mendukung link Google Apps Script (/exec) atau link website HTML5 lainnya.</p>
         </div>
 
-        <div class="pt-2 flex gap-2">
-          <button type="button" onclick="closeAddGameModal()" class="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-all">
+        <div class="pt-3 flex gap-3">
+          <button type="button" onclick="closeAddGameModal()" class="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-brand font-bold transition-all">
             Batal
           </button>
-          <button type="submit" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-md shadow-indigo-200">
-            Simpan Game
+          <button type="submit" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-brand font-bold transition-all shadow-md shadow-purple-200">
+            Simpan Game ✨
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- TOAST NOTIFIKASI RAMAH ANAK -->
+  <div id="toastMessage" class="fixed top-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-2.5 rounded-2xl font-brand font-bold text-xs sm:text-sm shadow-xl z-50 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-4 flex items-center gap-2">
+    <span>🌟</span>
+    <span id="toastText">Pemberitahuan</span>
+  </div>
+
   <script>
-    // DATA PERMAINAN (Game Google Apps Script Anda disematkan langsung di sini)
+    /* =========================================================
+       AUDIO SOUND FX MENGGUNAKAN WEB AUDIO API SINTETIS
+       Memberikan efek suara ceria saat tombol diklik
+       ========================================================= */
+    let audioCtx = null;
+    let isSoundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
+      if (!isSoundEnabled) return;
+      initAudio();
+      if (!audioCtx) return;
+
+      try {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        // Abaikan jika browser membatasi autoplay
+      }
+    }
+
+    function soundPop() {
+      playTone(587.33, 'triangle', 0.08, 0.12); // Nada D5 ceria
+    }
+
+    function soundLaunch() {
+      setTimeout(() => playTone(523.25, 'triangle', 0.1, 0.15), 0);
+      setTimeout(() => playTone(659.25, 'triangle', 0.12, 0.15), 80);
+      setTimeout(() => playTone(783.99, 'triangle', 0.2, 0.2), 160);
+    }
+
+    function toggleSoundFx() {
+      isSoundEnabled = !isSoundEnabled;
+      document.getElementById('soundIcon').textContent = isSoundEnabled ? '🔊' : '🔇';
+      showToast(isSoundEnabled ? 'Efek suara aktif!' : 'Efek suara dimatikan');
+      if (isSoundEnabled) soundPop();
+    }
+
+    // DAFTAR PERMAINAN UTAMA (Game Google Apps Script Anda disematkan langsung di sini)
     const DEFAULT_GAMES = [
       {
         id: 'kristal-angka',
@@ -230,20 +464,17 @@
         categoryLabel: 'Matematika',
         ageGroup: 'Kelas 1 - 3 SD',
         emoji: '💎',
-        description: 'Latihan penalaran relasi bilangan A + B = C dengan 4 pulau kristal, pulau mahkota puncak, fitur bintik hitung, serta cetak laporan analisis belajar.',
+        colorTheme: 'from-amber-400 to-orange-500',
+        cardBg: 'border-amber-200 hover:border-amber-400',
+        description: 'Latihan penalaran relasi bilangan A + B = C dengan 4 pulau kristal ajaib, pulau mahkota, serta pencatatan otomatis hasil belajar siswa.',
         url: 'https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec',
-        tags: ['Number Bonds', 'Penjumlahan', 'Analisis Otomatis', 'Google Sheet']
+        tags: ['Number Bonds', 'Relasi Bilangan', 'Cetak Analisis PDF']
       }
     ];
 
-    const STORAGE_KEY = 'ruang_edugame_list';
-    let gamesList = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_GAMES;
+    let gamesList = DEFAULT_GAMES;
     let currentCategory = 'all';
     let searchQuery = '';
-
-    function saveGames() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(gamesList));
-    }
 
     function renderGames() {
       const grid = document.getElementById('gamesGrid');
@@ -264,44 +495,47 @@
         empty.classList.add('hidden');
         filtered.forEach(game => {
           const card = document.createElement('div');
-          card.className = 'bg-white rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group';
-          
+          card.className = `bg-white rounded-3xl border-2 ${game.cardBg || 'border-purple-100 hover:border-purple-300'} shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group transform hover:-translate-y-1.5`;
+
           const tagsHtml = (game.tags || []).map(t => 
-            `<span class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${t}</span>`
+            `<span class="text-[10px] font-bold bg-purple-50 text-purple-700 px-2.5 py-1 rounded-lg border border-purple-100">${t}</span>`
           ).join('');
 
           card.innerHTML = `
             <div class="p-5 sm:p-6 flex-1">
-              <div class="flex items-start justify-between gap-3 mb-3">
-                <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-3xl shadow-inner group-hover:scale-110 transition-transform">
+              <!-- Baris Atas Ikon & Usia -->
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr ${game.colorTheme || 'from-indigo-500 to-purple-600'} flex items-center justify-center text-3xl shadow-md text-white group-hover:scale-110 group-hover:rotate-6 transition-transform">
                   ${game.emoji || '🎮'}
                 </div>
-                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
+                <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                   ${game.ageGroup}
                 </span>
               </div>
 
-              <div class="mb-1 text-xs font-bold text-indigo-600 uppercase tracking-wider">
+              <!-- Judul & Kategori -->
+              <div class="mb-1 text-[11px] font-extrabold text-purple-600 uppercase tracking-wider font-brand">
                 ${game.categoryLabel || game.category}
               </div>
-              <h3 class="font-brand text-lg font-bold text-slate-900 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">
+              <h3 class="font-brand text-xl font-bold text-slate-900 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">
                 ${game.title}
               </h3>
-              <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-4">
+              <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-4 font-medium">
                 ${game.description}
               </p>
 
-              <div class="flex flex-wrap gap-1 mb-2">
+              <!-- Label Topik -->
+              <div class="flex flex-wrap gap-1.5">
                 ${tagsHtml}
               </div>
             </div>
 
-            <div class="p-4 sm:px-6 bg-slate-50/60 border-t border-slate-100 flex items-center gap-2">
-              <button onclick="launchGame('${game.id}')" class="flex-1 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-100 flex items-center justify-center gap-1.5">
-                <span>▶</span>
-                <span>Mainkan Game</span>
+            <!-- Tombol Aksi Bawah -->
+            <div class="p-4 sm:px-6 bg-slate-50 border-t border-slate-100 flex items-center gap-2">
+              <button onclick="launchGame('${game.id}')" class="flex-1 py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-95 text-white font-brand font-bold rounded-2xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-100 flex items-center justify-center gap-2">
+                <span>▶ Mainkan Game</span>
               </button>
-              <a href="${game.url}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs transition-colors" title="Buka di tab baru">
+              <a href="${game.url}" target="_blank" rel="noopener noreferrer" class="w-11 h-11 rounded-2xl bg-white border border-slate-200 hover:bg-slate-100 active:scale-95 flex items-center justify-center text-slate-600 text-sm transition-colors shadow-xs" title="Buka di tab baru">
                 ↗
               </a>
             </div>
@@ -312,13 +546,14 @@
     }
 
     function filterCategory(cat) {
+      soundPop();
       currentCategory = cat;
-      document.querySelectorAll('.category-pill').forEach(btn => {
-        btn.className = 'category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200';
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.className = 'category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-700 flex-shrink-0';
       });
       const activeBtn = document.getElementById(`tab-${cat}`);
       if (activeBtn) {
-        activeBtn.className = 'category-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-xs';
+        activeBtn.className = 'category-btn active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-brand font-bold transition-all bg-indigo-600 text-white shadow-md shadow-indigo-100 flex-shrink-0';
       }
       renderGames();
     }
@@ -329,6 +564,7 @@
     }
 
     function launchGame(gameId) {
+      soundLaunch();
       const game = gamesList.find(g => g.id === gameId);
       if (!game) return;
 
@@ -346,6 +582,14 @@
       document.getElementById('playerModal').classList.remove('hidden');
     }
 
+    function reloadCurrentGame() {
+      soundPop();
+      const iframe = document.getElementById('gameIframe');
+      const loader = document.getElementById('iframeLoader');
+      if (loader) loader.classList.remove('opacity-0', 'pointer-events-none');
+      iframe.src = iframe.src;
+    }
+
     function hideIframeLoader() {
       const loader = document.getElementById('iframeLoader');
       if (loader) {
@@ -354,22 +598,26 @@
     }
 
     function closePlayerModal() {
+      soundPop();
       const iframe = document.getElementById('gameIframe');
       iframe.src = '';
       document.getElementById('playerModal').classList.add('hidden');
     }
 
     function openAddGameModal() {
+      soundPop();
       document.getElementById('addGameModal').classList.remove('hidden');
     }
 
     function closeAddGameModal() {
+      soundPop();
       document.getElementById('addGameModal').classList.add('hidden');
       document.getElementById('addGameForm').reset();
     }
 
     function saveNewGame(e) {
       e.preventDefault();
+      soundLaunch();
       const title = document.getElementById('newTitle').value.trim();
       const emoji = document.getElementById('newEmoji').value.trim() || '🎮';
       const category = document.getElementById('newCategory').value;
@@ -391,17 +639,35 @@
         categoryLabel: catLabels[category] || 'Umum',
         ageGroup: ageGroup,
         emoji: emoji,
+        colorTheme: 'from-pink-500 to-purple-600',
+        cardBg: 'border-purple-200 hover:border-purple-400',
         description: desc,
         url: url,
-        tags: [catLabels[category], 'Baru']
+        tags: [catLabels[category], 'Baru Ditambahkan']
       };
 
       gamesList.unshift(newGameObj);
-      saveGames();
       renderGames();
       closeAddGameModal();
+      showToast('Game baru berhasil ditambahkan! 🚀');
     }
 
+    function showToast(text) {
+      const toast = document.getElementById('toastMessage');
+      const toastText = document.getElementById('toastText');
+      toastText.textContent = text;
+
+      toast.classList.remove('opacity-0', '-translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-4');
+      }, 2500);
+    }
+
+    // Jalankan render saat halaman pertama kali dibuka
     window.onload = function() {
       renderGames();
     };
