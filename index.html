@@ -2,245 +2,441 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Game Pembelajaran Interaktif</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Portal Game Edukasi Interaktif - Dunia Belajar Ceria</title>
   
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 
   <style>
     body {
+      font-family: 'Fredoka', cursive, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    
+    .font-sans-alt {
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    h1, h2, h3, .font-heading {
-      font-family: 'Fredoka', cursive, sans-serif;
+
+    /* Efek tombol kartun 3D yang empuk saat ditekan */
+    .btn-3d {
+      transition: all 0.15s ease;
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
     }
+    .btn-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    /* Animasi lembut mengambang untuk maskot dan dekorasi */
+    @keyframes floatingSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(1deg); }
+    }
+    .animate-float-slow {
+      animation: floatingSlow 4s ease-in-out infinite;
+    }
+
+    /* Efek sorotan kartu game */
     .game-card {
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
     }
     .game-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-6px) scale(1.015);
     }
   </style>
 </head>
-<body class="bg-amber-50/50 text-slate-800 min-h-screen flex flex-col antialiased">
+<body class="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 min-h-screen text-slate-800 flex flex-col justify-between">
 
-  <!-- NOTIFIKASI TOAST -->
-  <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-xl font-bold text-sm transition-all duration-300 pointer-events-none opacity-0 -translate-y-4 bg-slate-900 text-white flex items-center gap-2">
-    <span id="toastIcon">✨</span>
-    <span id="toastMsg">Pesan</span>
-  </div>
-
-  <!-- BAR NOTIFIKASI JIKA MODE GURU AKTIF -->
-  <div id="adminModeBanner" class="hidden bg-amber-400 text-amber-950 px-4 py-2 text-xs sm:text-sm font-bold flex items-center justify-between shadow-sm sticky top-0 z-40">
-    <div class="flex items-center gap-2">
-      <span class="text-base">👑</span>
-      <span>Mode Guru Aktif: Anda dapat menambah, mengubah, dan menghapus game.</span>
-    </div>
-    <div class="flex items-center gap-2">
-      <button onclick="openChangePinModal()" class="bg-amber-900 text-amber-100 hover:bg-black px-3 py-1 rounded-lg text-xs transition-colors">
-        🔑 Ganti PIN
-      </button>
-      <button onclick="logoutAdmin()" class="bg-amber-950 text-white hover:bg-black px-3 py-1 rounded-lg text-xs transition-colors">
-        Keluar Mode Guru ✖
-      </button>
-    </div>
-  </div>
-
-  <!-- NAVBAR ATAS -->
-  <header class="bg-white border-b-2 border-amber-200/80 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 bg-gradient-to-tr from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center text-2xl shadow-md">
+  <!-- ========================================================
+       NAVIGASI UTAMA
+       ======================================================== -->
+  <header class="w-full bg-white/95 backdrop-blur-md border-b-4 border-amber-300 sticky top-0 z-40 shadow-lg">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-4 flex-wrap">
+      
+      <!-- Brand Logo & Judul Portofolio -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-tr from-amber-400 via-rose-400 to-indigo-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-md animate-float-slow border-2 border-white">
           🎮
         </div>
         <div>
-          <h1 class="text-lg sm:text-xl font-bold text-slate-800 tracking-tight leading-tight">Game Pembelajaran</h1>
-          <p class="text-xs text-amber-600 font-bold hidden sm:block">Laboratorium & Petualangan Edukasi Interaktif</p>
+          <h1 class="text-base sm:text-xl font-black text-indigo-950 tracking-tight leading-tight flex items-center gap-1.5">
+            Dunia Game Edukasi
+            <span class="text-[10px] bg-amber-400 text-amber-950 px-2 py-0.5 rounded-full font-black uppercase">SD</span>
+          </h1>
+          <p class="text-[11px] sm:text-xs font-bold text-indigo-600 font-sans-alt">Laboratorium Maya & Arena Berhitung Interaktif</p>
         </div>
       </div>
 
+      <!-- Tombol Aksi Kanan: Suara, Tombol Tambah (Hanya Muncul di Mode Guru), & Kunci Guru -->
       <div class="flex items-center gap-2">
-        <button id="btnAddGameNav" onclick="openAddGameModal()" class="hidden bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl shadow-sm transition-transform active:scale-95 flex items-center gap-1.5">
+        <!-- Tombol Tambah Game (HANYA MUNCUL DI MODE GURU) -->
+        <button id="btnAddNewGame" onclick="openGameEditorModal()" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm border-2 border-emerald-300 btn-3d flex items-center gap-1.5">
           <span>➕</span>
           <span>Tambah Game</span>
         </button>
 
-        <button id="btnAdminTrigger" onclick="openPinModal()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs sm:text-sm font-bold px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
-          <span>🔐</span>
-          <span id="adminBtnLabel">Mode Guru</span>
+        <!-- Tombol Audio Mute / Unmute -->
+        <button id="btnSoundToggle" onclick="toggleSoundFX()" class="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-300 flex items-center justify-center text-lg shadow-sm transition-all" title="Efek Suara">
+          🔊
         </button>
+
+        <!-- Tombol Mode Guru (Admin Lock) -->
+        <button id="btnAdminAccess" onclick="toggleAdminModal()" class="bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 text-indigo-950 font-bold px-3 py-2 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all">
+          <span id="adminLockIcon">🔐</span>
+          <span id="adminLockText" class="hidden sm:inline">Mode Guru</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- BANNER PEMBERITAHUAN MODE GURU AKTIF (Hanya tampil saat mode guru aktif) -->
+    <div id="adminModeBanner" class="hidden bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 text-amber-950 font-extrabold px-4 py-2 border-t-2 border-b-2 border-amber-600 text-xs sm:text-sm shadow-inner flex items-center justify-between">
+      <div class="flex items-center gap-2 max-w-4xl mx-auto w-full justify-between flex-wrap">
+        <span class="flex items-center gap-1.5">
+          <span>👑</span> <b>Mode Pengelola / Guru Aktif:</b> Anda sekarang dapat menambah, mengedit, dan menghapus game.
+        </span>
+        <div class="flex items-center gap-2">
+          <button onclick="openChangePinModal()" class="bg-amber-900/15 hover:bg-amber-900/30 text-amber-950 px-2.5 py-1 rounded-xl text-[11px] font-bold border border-amber-900/30 flex items-center gap-1 transition-colors">
+            🔑 Ganti PIN
+          </button>
+          <button onclick="openExportModal()" class="bg-white/90 hover:bg-white text-indigo-950 px-2.5 py-1 rounded-xl text-[11px] font-bold shadow-xs">
+            📋 Salin Kode GitHub
+          </button>
+          <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-xl text-[11px] font-bold shadow-xs">
+            Kunci / Keluar ✕
+          </button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- BANNER UTAMA -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-2 w-full">
-    <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-      <div class="relative z-10 max-w-xl text-center md:text-left">
-        <span class="bg-amber-400 text-amber-950 font-bold text-xs uppercase px-3 py-1 rounded-full inline-block mb-3">Portal Resmi Siswa</span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold mb-2 tracking-tight">Belajar Sains & Matematika Jadi Seru!</h2>
-        <p class="text-purple-100 text-sm sm:text-base leading-relaxed mb-4">
-          Pilih petualanganmu, coba eksperimen warna seru, atau pecahkan kristal angka rahasia. Semua hasil belajarmu tersimpan otomatis!
-        </p>
-        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-          <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold">✨ Otomatis Simpan</span>
-          <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold">📊 Analisis Rapor</span>
-          <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold">🖨️ Cetak Hasil</span>
+  <!-- ========================================================
+       KONTEN UTAMA & DAFTAR GAME
+       ======================================================== -->
+  <main class="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex-1 w-full space-y-6">
+
+    <!-- HERO HIGHLIGHT BANNER: Game Unggulan -->
+    <div id="heroFeaturedSection" class="w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-5 sm:p-7 text-white shadow-2xl relative overflow-hidden border-4 border-white/20">
+      <div class="absolute -right-10 -bottom-10 w-48 h-48 sm:w-64 sm:h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div class="text-center md:text-left space-y-2 max-w-xl">
+          <span class="inline-flex items-center gap-1.5 bg-amber-400 text-amber-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+            ⭐ Game Unggulan Minggu Ini
+          </span>
+          <h2 id="featuredTitle" class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
+            Petualangan Kristal Angka
+          </h2>
+          <p id="featuredDesc" class="text-xs sm:text-sm text-purple-100 font-sans-alt font-medium leading-relaxed">
+            Asah logika relasi penjumlahan angka dasar melalui 4 pulau satelit dan taklukkan teka-teki Pulau Mahkota Raja!
+          </p>
+          <div class="flex items-center justify-center md:justify-start gap-2 pt-1">
+            <span id="featuredAge" class="bg-white/20 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-0.5 rounded-lg">Kelas 1 - 3 SD</span>
+            <span id="featuredCategory" class="bg-emerald-400/30 text-emerald-200 text-[11px] font-bold px-2.5 py-0.5 rounded-lg border border-emerald-400/40">Matematika</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-3">
+          <div id="featuredEmoji" class="w-24 h-24 sm:w-28 sm:h-28 bg-white/15 backdrop-blur-md rounded-3xl border-4 border-white/30 flex items-center justify-center text-5xl sm:text-6xl shadow-xl animate-float-slow">
+            💎
+          </div>
+          <button id="btnPlayFeatured" onclick="playFeaturedGame()" class="px-6 py-3 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 active:scale-95 text-amber-950 font-black text-sm sm:text-base rounded-2xl shadow-xl border-2 border-white btn-3d flex items-center gap-2">
+            <span>🚀</span>
+            <span>Mainkan Sekarang</span>
+          </button>
         </div>
       </div>
-      <div class="text-7xl sm:text-8xl select-none animate-bounce">
-        🚀
-      </div>
     </div>
-  </section>
 
-  <!-- KONTROL PENCARIAN & FILTER KATEGORI -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-5 w-full">
-    <div class="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border-2 border-amber-100 shadow-sm">
-      <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-        <button onclick="filterCategory('all')" id="tab-all" class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-purple-600 text-white shadow-sm transition-all whitespace-nowrap">Semua Game</button>
-        <button onclick="filterCategory('math')" id="tab-math" class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all whitespace-nowrap">Matematika</button>
-        <button onclick="filterCategory('science')" id="tab-science" class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all whitespace-nowrap">IPA / Sains</button>
+    <!-- AREA FILTER KATEGORI & PENCARIAN -->
+    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-3 sm:p-4 border-4 border-indigo-200 shadow-xl flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Tab Kategori Edukatif -->
+      <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+        <button onclick="filterCategory('all')" id="tabCat-all" class="category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-600 text-white shadow-md">
+          Semua Game 🌟
+        </button>
+        <button onclick="filterCategory('math')" id="tabCat-math" class="category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-50 text-indigo-900 hover:bg-indigo-100">
+          Matematika 🔢
+        </button>
+        <button onclick="filterCategory('science')" id="tabCat-science" class="category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-50 text-indigo-900 hover:bg-indigo-100">
+          Sains & IPA 🧪
+        </button>
+        <button onclick="filterCategory('logic')" id="tabCat-logic" class="category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-50 text-indigo-900 hover:bg-indigo-100">
+          Logika 🧩
+        </button>
       </div>
 
-      <div class="w-full sm:w-72 relative">
-        <input type="text" id="searchInput" oninput="renderGames()" placeholder="Cari judul game..." class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all font-medium">
-        <span class="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
+      <!-- Bilah Pencarian Cepat -->
+      <div class="w-full md:w-64 relative">
+        <input type="text" id="searchInput" oninput="onSearchChange()" placeholder="Cari judul game..." class="w-full bg-indigo-50 border-2 border-indigo-200 focus:border-indigo-500 rounded-2xl pl-9 pr-4 py-2 text-xs sm:text-sm font-bold text-indigo-950 placeholder:text-indigo-400 focus:outline-none transition-all">
+        <span class="absolute left-3 top-2.5 text-xs text-indigo-400 pointer-events-none">🔍</span>
       </div>
-    </div>
-  </section>
 
-  <!-- DAFTAR KARTU GAME -->
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-12 flex-1 w-full">
-    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Kartu diisi oleh JavaScript -->
     </div>
-    
-    <div id="emptyState" class="hidden text-center py-16">
-      <div class="text-5xl mb-2">🔍</div>
-      <h3 class="text-lg font-bold text-slate-700 mb-1">Game Tidak Ditemukan</h3>
-      <p class="text-xs sm:text-sm text-slate-500">Coba ganti kata kunci pencarian atau pilih kategori lain.</p>
+
+    <!-- GRID KARTU DAFTAR GAME -->
+    <div id="gamesGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      <!-- Kartu-kartu game dirender otomatis oleh JavaScript -->
     </div>
+
+    <!-- State Kosong jika Pencarian Tidak Ditemukan -->
+    <div id="emptyState" class="hidden text-center py-14 bg-white/90 rounded-3xl border-4 border-dashed border-indigo-200 p-6">
+      <span class="text-5xl block mb-2">🔎</span>
+      <h3 class="text-lg font-black text-indigo-950">Ups, Game Tidak Ditemukan</h3>
+      <p class="text-xs sm:text-sm font-medium text-slate-500 font-sans-alt mt-1">Coba gunakan kata kunci pencarian yang lain atau ganti kategori.</p>
+      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-md">
+        Tampilkan Semua Game
+      </button>
+    </div>
+
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-white border-t border-amber-200 py-6 text-center text-xs text-slate-500 font-medium">
-    <p>Portal Game Pembelajaran Digital Siswa &bull; Dilengkapi Rekap Otomatis Spreadsheet</p>
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="w-full bg-slate-900/90 text-slate-400 text-xs py-4 px-4 text-center border-t-2 border-slate-800 font-sans-alt">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 <b>Dunia Game Edukasi Interaktif</b> • Belajar Menyenangkan Berbasis Web & Google Apps Script.</p>
+      <div class="flex items-center gap-3 text-slate-300">
+        <span>Dibangun khusus untuk siswa SD & Guru Kreatif</span>
+      </div>
+    </div>
   </footer>
 
-  <!-- MODAL LOGIN PIN MODE GURU -->
-  <div id="pinModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-4 border-amber-300 text-center">
-      <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+  <!-- ========================================================
+       MODAL PEMUTAR GAME (EMBEDDED CONSOLE PLAYER)
+       ======================================================== -->
+  <div id="gamePlayerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-indigo-400 w-full max-w-5xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+      
+      <!-- Topbar Konsol Game -->
+      <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white px-4 py-2.5 flex items-center justify-between border-b-4 border-amber-400">
+        <div class="flex items-center gap-2 truncate">
+          <span id="playerModalEmoji" class="text-2xl">🎮</span>
+          <div class="truncate leading-tight">
+            <h3 id="playerModalTitle" class="text-xs sm:text-sm font-black truncate">Memuat Game...</h3>
+            <span id="playerModalCategory" class="text-[10px] text-amber-300 font-bold uppercase tracking-wider block">Matematika</span>
+          </div>
+        </div>
+
+        <!-- Tombol Navigasi Layar -->
+        <div class="flex items-center gap-1.5">
+          <button onclick="reloadActiveGame()" class="px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 transition-all" title="Muat Ulang">
+            🔄
+          </button>
+          <button onclick="openInNewTab()" class="px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 transition-all flex items-center gap-1" title="Buka Tab Baru">
+            <span>↗️</span>
+            <span class="hidden sm:inline">Tab Baru</span>
+          </button>
+          <button onclick="closeGamePlayer()" class="w-8 h-8 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-black border border-rose-400 transition-transform active:scale-95 ml-1">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Iframe Penampil Game -->
+      <div class="flex-1 w-full bg-slate-900 relative">
+        <div id="iframeLoadingSpinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-white gap-2 z-10">
+          <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
+          <span class="text-xs font-bold text-slate-300">Menyiapkan Game Edukasi...</span>
+        </div>
+        <iframe id="gameIframe" src="" class="w-full h-full border-none" allow="autoplay; fullscreen" onload="hideIframeSpinner()"></iframe>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 1: AUTENTIKASI PIN MODE GURU
+       ======================================================== -->
+  <div id="adminAuthModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-indigo-500 max-w-sm w-full p-5 sm:p-6 shadow-2xl text-slate-800 text-center">
+      <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner border-2 border-indigo-200">
         🔐
       </div>
-      <h3 class="text-xl font-bold text-slate-800 mb-1">Akses Mode Guru</h3>
-      <p class="text-xs text-slate-500 mb-4">Masukkan PIN rahasia untuk mengelola koleksi game.</p>
-      
-      <input type="password" id="inputPin" maxlength="12" placeholder="Masukkan PIN" class="w-full text-center text-2xl tracking-widest py-2.5 px-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 mb-4 font-bold bg-slate-50">
-      
-      <div class="flex gap-2">
-        <button onclick="closePinModal()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
-          Batal
-        </button>
-        <button onclick="checkAdminPin()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-md">
-          Buka Kunci
-        </button>
+      <h3 class="text-lg font-black text-indigo-950">Akses Pengelola (Mode Guru)</h3>
+      <p class="text-xs text-slate-500 font-sans-alt mt-1 mb-4">
+        Masukkan PIN rahasia untuk membuka hak akses pengeditan portofolio.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <input type="password" id="adminPinInput" maxlength="12" placeholder="••••" class="w-full text-center tracking-widest text-2xl font-black py-2.5 bg-slate-50 border-2 border-indigo-200 focus:border-indigo-500 rounded-2xl focus:outline-none">
+        </div>
+        <div class="flex gap-2">
+          <button onclick="closeAdminModal()" class="w-1/2 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs sm:text-sm rounded-xl">
+            Batal
+          </button>
+          <button onclick="verifyAdminPin()" class="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-black text-xs sm:text-sm rounded-xl shadow-md">
+            Buka Kunci 🔓
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL GANTI PIN -->
-  <div id="changePinModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-4 border-amber-300 text-center">
-      <div class="w-14 h-14 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
+  <!-- ========================================================
+       MODAL 1B: GANTI PIN KEAMANAN GURU
+       ======================================================== -->
+  <div id="changePinModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-amber-400 max-w-sm w-full p-5 sm:p-6 shadow-2xl text-slate-800 text-center">
+      <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-2 border-2 border-amber-300">
         🔑
       </div>
-      <h3 class="text-xl font-bold text-slate-800 mb-1">Ganti PIN Mode Guru</h3>
-      <p class="text-xs text-slate-500 mb-4">Pastikan Anda mengingat PIN baru ini.</p>
-      
-      <div class="space-y-3 text-left mb-4">
+      <h3 class="text-base sm:text-lg font-black text-indigo-950">Ubah PIN Keamanan Guru</h3>
+      <p class="text-xs text-slate-500 font-sans-alt mt-0.5 mb-3">Buat PIN baru yang hanya Anda ketahui.</p>
+
+      <div class="space-y-2.5 text-left font-sans-alt text-xs">
         <div>
-          <label class="text-xs font-bold text-slate-600">PIN Lama</label>
-          <input type="password" id="oldPinInput" class="w-full mt-1 p-2 text-sm border border-slate-200 rounded-xl">
+          <label class="block font-bold text-slate-700 mb-1">PIN Lama Saat Ini</label>
+          <input type="password" id="oldPinInput" maxlength="12" placeholder="Masukkan PIN lama" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
         </div>
         <div>
-          <label class="text-xs font-bold text-slate-600">PIN Baru</label>
-          <input type="password" id="newPinInput" class="w-full mt-1 p-2 text-sm border border-slate-200 rounded-xl">
+          <label class="block font-bold text-slate-700 mb-1">PIN Baru (Minimal 4 Angka/Karakter)</label>
+          <input type="password" id="newPinInput" maxlength="12" placeholder="PIN baru" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
         </div>
-      </div>
-      
-      <div class="flex gap-2">
-        <button onclick="closeChangePinModal()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700">
-          Batal
-        </button>
-        <button onclick="saveNewPin()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-purple-600 text-white">
-          Simpan PIN
-        </button>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Ulangi PIN Baru</label>
+          <input type="password" id="confirmNewPinInput" maxlength="12" placeholder="Ulangi PIN baru" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button onclick="closeChangePinModal()" class="w-1/3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs">
+            Batal
+          </button>
+          <button onclick="saveNewPin()" class="w-2/3 py-2 bg-amber-500 hover:bg-amber-600 text-amber-950 font-black rounded-xl shadow-md text-xs">
+            Simpan PIN Baru 💾
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL TAMBAH / EDIT GAME -->
-  <div id="gameFormModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-4 border-purple-200 my-8">
-      <div class="flex items-center justify-between mb-4">
-        <h3 id="formModalTitle" class="text-lg font-bold text-slate-800">Tambah Game Baru</h3>
-        <button onclick="closeGameFormModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✖</button>
+  <!-- ========================================================
+       MODAL 2: FORMULIR TAMBAH & EDIT GAME (HANYA GURU)
+       ======================================================== -->
+  <div id="gameEditorModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-indigo-400 max-w-lg w-full p-5 sm:p-6 shadow-2xl text-slate-800 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex justify-between items-center mb-3">
+        <h3 id="editorModalTitle" class="text-base sm:text-lg font-black text-indigo-950 flex items-center gap-1.5">
+          <span>📝</span> <span>Tambah Game Baru</span>
+        </h3>
+        <button onclick="closeGameEditorModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-sm">✕</button>
       </div>
 
-      <form id="gameForm" onsubmit="handleGameSubmit(event)" class="space-y-3 text-xs sm:text-sm">
-        <input type="hidden" id="editGameId">
-        
-        <div class="grid grid-cols-4 gap-3">
+      <form id="gameEditForm" onsubmit="saveGameFromEditor(event)" class="space-y-3 font-sans-alt text-xs sm:text-sm">
+        <input type="hidden" id="editGameId" value="">
+
+        <!-- Judul & Ikon Emoji -->
+        <div class="grid grid-cols-4 gap-2">
           <div class="col-span-1">
-            <label class="block font-bold text-slate-700 mb-1">Ikon</label>
-            <input type="text" id="gameEmoji" required value="🎮" class="w-full p-2.5 text-center text-xl border rounded-xl bg-slate-50">
+            <label class="block font-bold text-slate-700 mb-1">Emoji / Ikon</label>
+            <input type="text" id="editEmoji" required maxlength="4" value="🎮" class="w-full text-center text-xl py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none">
           </div>
           <div class="col-span-3">
             <label class="block font-bold text-slate-700 mb-1">Judul Game</label>
-            <input type="text" id="gameTitle" required placeholder="Nama game..." class="w-full p-2.5 border rounded-xl bg-slate-50">
+            <input type="text" id="editTitle" required placeholder="Contoh: Petualangan Kristal Angka" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none font-bold">
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <!-- Kategori & Target Usia -->
+        <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Kategori</label>
-            <select id="gameCategory" class="w-full p-2.5 border rounded-xl bg-slate-50 font-medium">
+            <select id="editCategory" class="w-full px-2.5 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none font-semibold">
               <option value="math">Matematika</option>
-              <option value="science">IPA / Sains</option>
+              <option value="science">Sains & IPA</option>
+              <option value="logic">Logika & Teka-teki</option>
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Target Usia</label>
-            <input type="text" id="gameAge" required placeholder="cth: Kelas 1 - 3 SD" class="w-full p-2.5 border rounded-xl bg-slate-50">
+            <label class="block font-bold text-slate-700 mb-1">Rentang Usia / Kelas</label>
+            <input type="text" id="editAgeGroup" placeholder="Contoh: Kelas 1 - 3 SD" value="Kelas 1 - 3 SD" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none font-semibold">
           </div>
         </div>
 
+        <!-- URL Game (Google Apps Script / Web Lain) -->
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Deskripsi Ringkas</label>
-          <textarea id="gameDesc" rows="2" required placeholder="Penjelasan singkat manfaat game..." class="w-full p-2.5 border rounded-xl bg-slate-50"></textarea>
+          <label class="block font-bold text-slate-700 mb-1">Tautan Web App Game (URL)</label>
+          <input type="url" id="editUrl" required placeholder="https://script.google.com/.../exec" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none font-mono text-xs">
+          <span class="text-[10px] text-slate-400 block mt-0.5">Pastikan tautan berakhiran <b>/exec</b> jika menggunakan Google Apps Script.</span>
         </div>
 
+        <!-- Deskripsi Ringkas Game -->
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Tautan Web App Game (Google Apps Script / URL)</label>
-          <input type="url" id="gameUrl" required placeholder="https://script.google.com/.../exec" class="w-full p-2.5 border rounded-xl bg-slate-50 font-mono text-xs">
+          <label class="block font-bold text-slate-700 mb-1">Deskripsi Singkat</label>
+          <textarea id="editDescription" rows="3" required placeholder="Jelaskan secara singkat manfaat game ini untuk anak..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none leading-relaxed"></textarea>
         </div>
 
-        <div class="pt-3 flex gap-2">
-          <button type="button" onclick="closeGameFormModal()" class="flex-1 py-2.5 rounded-xl font-bold bg-slate-100 text-slate-700">Batal</button>
-          <button type="submit" class="flex-1 py-2.5 rounded-xl font-bold bg-purple-600 text-white shadow-md">Simpan Data</button>
+        <!-- Tag Label (Pisahkan dengan koma) -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Tag / Kata Kunci (Pisahkan dengan koma)</label>
+          <input type="text" id="editTags" placeholder="Contoh: Penjumlahan, Number Bonds, Cetak PDF" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none font-semibold text-xs">
+        </div>
+
+        <!-- Tombol Aksi -->
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeGameEditorModal()" class="w-1/3 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl">
+            Batal
+          </button>
+          <button type="submit" class="w-2/3 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold rounded-xl shadow-md">
+            💾 Simpan Perubahan
+          </button>
         </div>
       </form>
+
     </div>
   </div>
 
-  <!-- JAVASCRIPT UTAMA -->
+  <!-- ========================================================
+       MODAL 3: EKSPOR KODE UNTUK GITHUB (PERMANEN DI SELURUH DUNIA)
+       ======================================================== -->
+  <div id="exportModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-amber-400 max-w-lg w-full p-5 sm:p-6 shadow-2xl text-slate-800">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-base font-black text-indigo-950 flex items-center gap-2">
+          <span>📋</span> Salin Data Game untuk GitHub
+        </h3>
+        <button onclick="closeExportModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 font-bold">✕</button>
+      </div>
+      <p class="text-xs text-slate-600 font-sans-alt mb-3 leading-relaxed">
+        Salin kode objek JavaScript di bawah ini, lalu tempelkan ke variabel <code class="bg-slate-100 text-indigo-800 px-1 py-0.5 rounded font-bold">DEFAULT_GAMES</code> di file GitHub Anda agar perubahan ini otomatis permanen di semua perangkat murid:
+      </p>
+      
+      <textarea id="exportCodeArea" readonly rows="8" class="w-full font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded-xl focus:outline-none mb-3"></textarea>
+
+      <div class="flex gap-2">
+        <button onclick="copyExportedCode()" class="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-black text-xs sm:text-sm rounded-xl shadow-md flex items-center justify-center gap-1.5">
+          <span>📋</span> Salin ke Clipboard
+        </button>
+        <button onclick="closeExportModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs rounded-xl">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFIKASI SEMENTARA -->
+  <div id="toastMessage" class="fixed top-5 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-2xl z-50 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-4">
+    Notifikasi
+  </div>
+
+  <!-- ========================================================
+       SKRIP LOGIKA PORTAL & MODE GURU
+       ======================================================== -->
   <script>
-    // DATA PERMAINAN AWAL (Termasuk link game Anda)
+    /* ---------------------------------------------------------
+       1. DATA PERMAINAN DASAR (DEFAULT GAMES)
+       --------------------------------------------------------- */
     const DEFAULT_GAMES = [
       {
         id: 'kristal-angka',
@@ -249,59 +445,252 @@
         categoryLabel: 'Matematika',
         ageGroup: 'Kelas 1 - 3 SD',
         emoji: '💎',
-        description: 'Latihan relasi bilangan A + B = C dengan 4 pulau tantangan, pulau mahkota, serta diagnosis belajar otomatis.',
-        url: 'https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec'
+        description: 'Latihan penalaran relasi bilangan A + B = C dengan 4 pulau satelit, pulau mahkota, serta diagnosis perkembangan belajar dan cetak PDF.',
+        url: 'https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec',
+        tags: ['Number Bonds', 'Penjumlahan', 'Analisis Siswa']
       },
       {
         id: 'lab-campur-warna',
         title: 'Lab Maya Campur Warna IPA',
         category: 'science',
-        categoryLabel: 'IPA / Sains',
-        ageGroup: 'Kelas 2 - 5 SD',
+        categoryLabel: 'Sains & IPA',
+        ageGroup: 'Kelas 3 - 5 SD',
         emoji: '🧪',
-        description: 'Eksperimen mencampur pigmen warna primer, sekunder, & persentase takaran dengan tabung reaksi interaktif.',
-        url: '#'
+        description: 'Simulasi lab sains pencampuran pigmen warna dasar (RYB) dan rasio proporsi matematika, dilengkapi misi tantangan resep dan cetak laporan evaluasi PDF.',
+        url: 'https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec',
+        tags: ['Warna Primer', 'Rasio & Proporsi', 'Simulasi Lab', 'Laporan PDF']
       }
     ];
 
-    let games = [];
-    let isAdminActive = false;
+    /* ---------------------------------------------------------
+       2. MANAJEMEN PENYIMPANAN LOKAL (LOCALSTORAGE)
+       --------------------------------------------------------- */
+    const STORAGE_KEY_GAMES = 'portfolio_game_list_v2';
+    const STORAGE_KEY_PIN_HASH = 'portfolio_teacher_pinhash_v1';
+    
+    // Hash SHA-256 bawaan awal (default PIN sebelum Anda ganti sendiri)
+    // Angka PIN asli tidak tertulis dalam kode sumber
+    const DEFAULT_PIN_HASH = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
+
+    let currentGames = [];
+    let isTeacherMode = false;
     let selectedCategory = 'all';
+    let searchQuery = '';
+    let activePlayingGame = null;
 
-    // Inisialisasi Data Game & PIN
-    function loadInitialData() {
-      const savedGames = localStorage.getItem('portal_games_v2');
-      if (savedGames) {
-        try {
-          games = JSON.parse(savedGames);
-        } catch (e) {
-          games = DEFAULT_GAMES;
-        }
-      } else {
-        games = DEFAULT_GAMES;
-      }
-
-      // Pastikan PIN tersimpan (PIN bawaan awal: 1234)
-      if (!localStorage.getItem('admin_pin_code')) {
-        localStorage.setItem('admin_pin_code', '1234');
-      }
-
-      renderGames();
+    // Fungsi utilitas enkripsi satu arah SHA-256
+    async function hashPinString(pin) {
+      const utf8 = new TextEncoder().encode(pin);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // Fungsi Render Daftar Game
-    function renderGames() {
-      const container = document.getElementById('gamesGrid');
-      const emptyState = document.getElementById('emptyState');
-      const searchKey = document.getElementById('searchInput').value.toLowerCase().trim();
+    function initData() {
+      const saved = localStorage.getItem(STORAGE_KEY_GAMES);
+      if (saved) {
+        try {
+          currentGames = JSON.parse(saved);
+        } catch (e) {
+          currentGames = [...DEFAULT_GAMES];
+        }
+      } else {
+        currentGames = [...DEFAULT_GAMES];
+        saveGamesToStorage();
+      }
+    }
 
-      const filtered = games.filter(game => {
-        const matchCategory = (selectedCategory === 'all') || (game.category === selectedCategory);
-        const matchSearch = game.title.toLowerCase().includes(searchKey) || game.description.toLowerCase().includes(searchKey);
+    function saveGamesToStorage() {
+      localStorage.setItem(STORAGE_KEY_GAMES, JSON.stringify(currentGames));
+    }
+
+    function getTeacherPinHash() {
+      return localStorage.getItem(STORAGE_KEY_PIN_HASH) || DEFAULT_PIN_HASH;
+    }
+      } else {
+        currentGames = [...DEFAULT_GAMES];
+        saveGamesToStorage();
+      }
+    }
+
+    function saveGamesToStorage() {
+      localStorage.setItem(STORAGE_KEY_GAMES, JSON.stringify(currentGames));
+    }
+
+    function getTeacherPin() {
+      return localStorage.getItem(STORAGE_KEY_PIN) || '1234';
+    }
+
+    /* ---------------------------------------------------------
+       3. SISTEM AUDIO SINTETIS (WEB AUDIO API)
+       --------------------------------------------------------- */
+    let audioCtx = null;
+    let isSoundMuted = false;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
+      if (isSoundMuted) return;
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function soundClick() { playTone(600, 'sine', 0.08, 0.15); }
+    function soundFanfare() {
+      [523.25, 659.25, 783.99].forEach((f, i) => {
+        setTimeout(() => playTone(f, 'triangle', 0.18, 0.2), i * 90);
+      });
+    }
+
+    function toggleSoundFX() {
+      isSoundMuted = !isSoundMuted;
+      document.getElementById('btnSoundToggle').textContent = isSoundMuted ? '🔇' : '🔊';
+      showToast(isSoundMuted ? 'Suara dinonaktifkan' : 'Suara aktif');
+    }
+
+    /* ---------------------------------------------------------
+       4. SISTEM MODE GURU (ADMIN VERIFICATION)
+       --------------------------------------------------------- */
+    function toggleAdminModal() {
+      soundClick();
+      if (isTeacherMode) {
+        logoutAdmin();
+      } else {
+        document.getElementById('adminPinInput').value = '';
+        document.getElementById('adminAuthModal').classList.remove('hidden');
+        setTimeout(() => document.getElementById('adminPinInput').focus(), 150);
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminAuthModal').classList.add('hidden');
+    }
+
+    async function verifyAdminPin() {
+      initAudio();
+      const input = document.getElementById('adminPinInput').value.trim();
+      const targetHash = getTeacherPinHash();
+      const inputHash = await hashPinString(input);
+
+      if (inputHash === targetHash) {
+        isTeacherMode = true;
+        closeAdminModal();
+        applyTeacherModeUI();
+        soundFanfare();
+        showToast('Selamat Datang, Bapak/Ibu Guru! 👑 Mode Pengelola Aktif.');
+      } else {
+        playTone(200, 'sawtooth', 0.2, 0.2);
+        showToast('PIN salah! Silakan coba lagi.');
+      }
+    }
+
+    /* SISTEM GANTI PIN */
+    function openChangePinModal() {
+      soundClick();
+      document.getElementById('oldPinInput').value = '';
+      document.getElementById('newPinInput').value = '';
+      document.getElementById('confirmNewPinInput').value = '';
+      document.getElementById('changePinModal').classList.remove('hidden');
+    }
+
+    function closeChangePinModal() {
+      document.getElementById('changePinModal').classList.add('hidden');
+    }
+
+    async function saveNewPin() {
+      const oldPin = document.getElementById('oldPinInput').value.trim();
+      const newPin = document.getElementById('newPinInput').value.trim();
+      const confirmPin = document.getElementById('confirmNewPinInput').value.trim();
+
+      const currentHash = getTeacherPinHash();
+      const oldHash = await hashPinString(oldPin);
+
+      if (oldHash !== currentHash) {
+        showToast('PIN lama tidak sesuai!');
+        playTone(200, 'sawtooth', 0.2, 0.2);
+        return;
+      }
+
+      if (newPin.length < 4) {
+        showToast('PIN baru minimal harus 4 karakter!');
+        return;
+      }
+
+      if (newPin !== confirmPin) {
+        showToast('Konfirmasi PIN baru tidak cocok!');
+        return;
+      }
+
+      const newHash = await hashPinString(newPin);
+      localStorage.setItem(STORAGE_KEY_PIN_HASH, newHash);
+      closeChangePinModal();
+      soundFanfare();
+      showToast('PIN Keamanan Guru berhasil diperbarui! 🔒');
+    }
+
+    function applyTeacherModeUI() {
+      const banner = document.getElementById('adminModeBanner');
+      const btnAdd = document.getElementById('btnAddNewGame');
+      const lockIcon = document.getElementById('adminLockIcon');
+      const lockText = document.getElementById('adminLockText');
+
+      if (isTeacherMode) {
+        banner.classList.remove('hidden');
+        btnAdd.classList.remove('hidden');
+        lockIcon.textContent = '🔓';
+        lockText.textContent = 'Keluar Mode Guru';
+      } else {
+        banner.classList.add('hidden');
+        btnAdd.classList.add('hidden');
+        lockIcon.textContent = '🔐';
+        lockText.textContent = 'Mode Guru';
+      }
+
+      renderGamesGrid();
+    }
+
+    function logoutAdmin() {
+      isTeacherMode = false;
+      applyTeacherModeUI();
+      soundClick();
+      showToast('Mode Guru telah dikunci. Sekarang dalam Mode Siswa.');
+    }
+
+    /* ---------------------------------------------------------
+       5. RENDER DAFTAR GAME KE KARTU-KARTU
+       --------------------------------------------------------- */
+    function renderGamesGrid() {
+      const container = document.getElementById('gamesGridContainer');
+      const emptyState = document.getElementById('emptyState');
+      container.innerHTML = '';
+
+      const filtered = currentGames.filter(game => {
+        const matchCategory = selectedCategory === 'all' || game.category === selectedCategory;
+        const matchSearch = game.title.toLowerCase().includes(searchQuery) ||
+                            game.description.toLowerCase().includes(searchQuery) ||
+                            (game.tags && game.tags.some(t => t.toLowerCase().includes(searchQuery)));
         return matchCategory && matchSearch;
       });
-
-      container.innerHTML = '';
 
       if (filtered.length === 0) {
         emptyState.classList.remove('hidden');
@@ -310,47 +699,76 @@
       emptyState.classList.add('hidden');
 
       filtered.forEach(game => {
-        const isMath = game.category === 'math';
-        const badgeColor = isMath ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
-        const btnColor = isMath ? 'from-amber-500 to-orange-500' : 'from-emerald-500 to-teal-500';
-
         const card = document.createElement('div');
-        card.className = 'game-card bg-white rounded-3xl p-5 border-2 border-slate-100 shadow-sm flex flex-col justify-between';
-        
+        card.className = "game-card bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border-4 border-indigo-200 shadow-xl flex flex-col justify-between relative overflow-hidden";
+
+        // Badge Kategori
+        let catBadgeColor = "bg-purple-100 text-purple-800 border-purple-200";
+        if (game.category === 'math') catBadgeColor = "bg-amber-100 text-amber-900 border-amber-300";
+        if (game.category === 'science') catBadgeColor = "bg-teal-100 text-teal-900 border-teal-300";
+
+        // Tags HTML
+        let tagsHtml = '';
+        if (game.tags && game.tags.length > 0) {
+          tagsHtml = game.tags.map(t => `<span class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-sans-alt">#${t}</span>`).join(' ');
+        }
+
+        // Tombol Edit & Hapus (HANYA MUNCUL DI MODE GURU)
+        let adminActionButtons = '';
+        if (isTeacherMode) {
+          adminActionButtons = `
+            <div class="flex items-center gap-1.5 bg-amber-100/90 p-1 rounded-2xl border border-amber-300 mb-2">
+              <span class="text-[10px] font-extrabold text-amber-950 px-1.5">Aksi Guru:</span>
+              <button onclick="openGameEditorModal('${game.id}')" class="px-2 py-1 bg-white hover:bg-amber-200 text-amber-950 text-xs font-bold rounded-xl shadow-2xs transition-all flex items-center gap-1">
+                ✏️ Edit
+              </button>
+              <button onclick="deleteGame('${game.id}')" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-2xs transition-all flex items-center gap-1">
+                🗑️ Hapus
+              </button>
+            </div>
+          `;
+        }
+
         card.innerHTML = `
           <div>
-            <div class="flex items-start justify-between mb-3">
-              <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl shadow-inner">
+            ${adminActionButtons}
+            
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div class="w-14 h-14 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center text-3xl border-2 border-indigo-200 shadow-sm shrink-0">
                 ${game.emoji || '🎮'}
               </div>
               <div class="flex flex-col items-end gap-1">
-                <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${badgeColor}">
-                  ${game.categoryLabel || (isMath ? 'Matematika' : 'IPA / Sains')}
+                <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${catBadgeColor} uppercase tracking-wider">
+                  ${game.categoryLabel || game.category}
                 </span>
-                <span class="text-[10px] font-bold text-slate-400 bg-slate-50 px-2 py-0.5 rounded-md">
-                  ${game.ageGroup}
+                <span class="text-[10px] font-bold text-slate-500 font-sans-alt">
+                  ${game.ageGroup || 'Semua Usia'}
                 </span>
               </div>
             </div>
 
-            <h3 class="text-lg font-bold text-slate-800 leading-snug mb-1">${game.title}</h3>
-            <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-4">${game.description}</p>
+            <h3 class="text-base sm:text-lg font-black text-indigo-950 leading-tight mb-1.5 mt-1">
+              ${game.title}
+            </h3>
+            
+            <p class="text-xs text-slate-600 font-sans-alt font-medium line-clamp-3 leading-relaxed mb-3">
+              ${game.description}
+            </p>
           </div>
 
-          <div class="pt-2 border-t border-slate-100 flex flex-col gap-2">
-            <button onclick="playGame('${game.url}')" class="w-full py-3 rounded-2xl bg-gradient-to-r ${btnColor} text-white font-bold text-xs sm:text-sm shadow-md hover:opacity-95 active:scale-95 transition-all flex items-center justify-center gap-1.5">
-              <span>▶</span>
-              <span>Mainkan Game</span>
-            </button>
+          <div>
+            <div class="flex flex-wrap gap-1 mb-3">
+              ${tagsHtml}
+            </div>
 
-            <!-- Menu Edit/Hapus khusus Mode Guru -->
-            <div class="admin-controls ${isAdminActive ? 'flex' : 'hidden'} gap-1.5 mt-1">
-              <button onclick="editGame('${game.id}')" class="flex-1 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold rounded-xl border border-amber-200 transition-colors">
-                ✏️ Edit
+            <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+              <button onclick="launchGame('${game.id}')" class="flex-1 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-95 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-md btn-3d flex items-center justify-center gap-1.5">
+                <span>▶️</span>
+                <span>Mainkan Game</span>
               </button>
-              <button onclick="deleteGame('${game.id}')" class="flex-1 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl border border-rose-200 transition-colors">
-                🗑️ Hapus
-              </button>
+              <a href="${game.url}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-200 flex items-center justify-center text-sm text-slate-700 transition-transform active:scale-90" title="Buka di Tab Baru">
+                ↗️
+              </a>
             </div>
           </div>
         `;
@@ -359,199 +777,275 @@
       });
     }
 
-    // Fungsi Mainkan Game (Buka Tab Baru Bebas Hambatan Iframe)
-    function playGame(url) {
-      if (!url || url === '#') {
-        showToast('Game ini sedang dalam tahap pengembangan 🚧');
-        return;
-      }
-      window.open(url, '_blank');
-    }
-
-    // Filter Kategori
+    /* ---------------------------------------------------------
+       6. FILTER & SEARCH HANDLER
+       --------------------------------------------------------- */
     function filterCategory(cat) {
+      soundClick();
       selectedCategory = cat;
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.className = 'category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all whitespace-nowrap';
+      document.querySelectorAll('.category-pill').forEach(btn => {
+        btn.className = "category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-50 text-indigo-900 hover:bg-indigo-100";
       });
-      const activeBtn = document.getElementById('tab-' + cat);
+      const activeBtn = document.getElementById(`tabCat-${cat}`);
       if (activeBtn) {
-        activeBtn.className = 'category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-purple-600 text-white shadow-sm transition-all whitespace-nowrap';
+        activeBtn.className = "category-pill px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all bg-indigo-600 text-white shadow-md";
       }
-      renderGames();
+      renderGamesGrid();
     }
 
-    // Pengecekan PIN Mode Guru
-    function openPinModal() {
-      if (isAdminActive) {
-        logoutAdmin();
-        return;
-      }
-      document.getElementById('inputPin').value = '';
-      document.getElementById('pinModal').classList.remove('hidden');
-      setTimeout(() => document.getElementById('inputPin').focus(), 100);
+    function onSearchChange() {
+      searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderGamesGrid();
     }
 
-    function closePinModal() {
-      document.getElementById('pinModal').classList.add('hidden');
+    function resetFilters() {
+      soundClick();
+      selectedCategory = 'all';
+      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      filterCategory('all');
     }
 
-    document.getElementById('inputPin').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkAdminPin();
-    });
-
-    function checkAdminPin() {
-      const input = document.getElementById('inputPin').value.trim();
-      const currentPin = localStorage.getItem('admin_pin_code') || '1234';
-
-      if (input === currentPin) {
-        isAdminActive = true;
-        closePinModal();
-        updateAdminInterface();
-        showToast('Berhasil masuk ke Mode Guru! 👑');
-      } else {
-        showToast('PIN salah! Coba lagi.');
-        document.getElementById('inputPin').value = '';
-      }
-    }
-
-    function updateAdminInterface() {
-      const banner = document.getElementById('adminModeBanner');
-      const addBtn = document.getElementById('btnAddGameNav');
-      const label = document.getElementById('adminBtnLabel');
-
-      if (isAdminActive) {
-        banner.classList.remove('hidden');
-        addBtn.classList.remove('hidden');
-        label.textContent = 'Keluar Mode Guru';
-      } else {
-        banner.classList.add('hidden');
-        addBtn.classList.add('hidden');
-        label.textContent = 'Mode Guru';
-      }
-      renderGames();
-    }
-
-    function logoutAdmin() {
-      isAdminActive = false;
-      updateAdminInterface();
-      showToast('Keluar dari Mode Guru.');
-    }
-
-    // Ganti PIN
-    function openChangePinModal() {
-      document.getElementById('oldPinInput').value = '';
-      document.getElementById('newPinInput').value = '';
-      document.getElementById('changePinModal').classList.remove('hidden');
-    }
-
-    function closeChangePinModal() {
-      document.getElementById('changePinModal').classList.add('hidden');
-    }
-
-    function saveNewPin() {
-      const oldPin = document.getElementById('oldPinInput').value.trim();
-      const newPin = document.getElementById('newPinInput').value.trim();
-      const currentPin = localStorage.getItem('admin_pin_code') || '1234';
-
-      if (oldPin !== currentPin) {
-        showToast('PIN lama tidak sesuai!');
-        return;
-      }
-      if (newPin.length < 4) {
-        showToast('PIN baru minimal 4 angka/karakter!');
-        return;
-      }
-
-      localStorage.setItem('admin_pin_code', newPin);
-      closeChangePinModal();
-      showToast('PIN baru berhasil disimpan! 🔑');
-    }
-
-    // Modal Tambah / Edit Game
-    function openAddGameModal() {
-      document.getElementById('editGameId').value = '';
-      document.getElementById('gameForm').reset();
-      document.getElementById('formModalTitle').textContent = 'Tambah Game Baru';
-      document.getElementById('gameFormModal').classList.remove('hidden');
-    }
-
-    function closeGameFormModal() {
-      document.getElementById('gameFormModal').classList.add('hidden');
-    }
-
-    function editGame(id) {
-      const game = games.find(g => g.id === id);
+    /* ---------------------------------------------------------
+       7. PEMUTAR GAME (EMBEDDED IFRAME CONSOLE)
+       --------------------------------------------------------- */
+    function launchGame(gameId) {
+      soundClick();
+      const game = currentGames.find(g => g.id === gameId);
       if (!game) return;
 
-      document.getElementById('editGameId').value = game.id;
-      document.getElementById('gameEmoji').value = game.emoji || '🎮';
-      document.getElementById('gameTitle').value = game.title;
-      document.getElementById('gameCategory').value = game.category;
-      document.getElementById('gameAge').value = game.ageGroup;
-      document.getElementById('gameDesc').value = game.description;
-      document.getElementById('gameUrl').value = game.url;
+      activePlayingGame = game;
+      document.getElementById('playerModalTitle').textContent = game.title;
+      document.getElementById('playerModalEmoji').textContent = game.emoji || '🎮';
+      document.getElementById('playerModalCategory').textContent = `${game.categoryLabel || game.category} • ${game.ageGroup}`;
+      
+      document.getElementById('iframeLoadingSpinner').classList.remove('hidden');
+      const iframe = document.getElementById('gameIframe');
+      iframe.src = game.url;
 
-      document.getElementById('formModalTitle').textContent = 'Edit Informasi Game';
-      document.getElementById('gameFormModal').classList.remove('hidden');
+      document.getElementById('gamePlayerModal').classList.remove('hidden');
     }
 
-    function handleGameSubmit(e) {
-      e.preventDefault();
-      const editId = document.getElementById('editGameId').value;
-      const category = document.getElementById('gameCategory').value;
+    function playFeaturedGame() {
+      if (currentGames.length > 0) {
+        launchGame(currentGames[0].id);
+      }
+    }
 
-      const gameData = {
-        id: editId || 'game_' + Date.now(),
-        emoji: document.getElementById('gameEmoji').value.trim() || '🎮',
-        title: document.getElementById('gameTitle').value.trim(),
-        category: category,
-        categoryLabel: category === 'math' ? 'Matematika' : 'IPA / Sains',
-        ageGroup: document.getElementById('gameAge').value.trim(),
-        description: document.getElementById('gameDesc').value.trim(),
-        url: document.getElementById('gameUrl').value.trim()
-      };
+    function hideIframeSpinner() {
+      document.getElementById('iframeLoadingSpinner').classList.add('hidden');
+    }
 
-      if (editId) {
-        const index = games.findIndex(g => g.id === editId);
-        if (index !== -1) games[index] = gameData;
-        showToast('Data game berhasil diperbarui! ✨');
+    function reloadActiveGame() {
+      soundClick();
+      const iframe = document.getElementById('gameIframe');
+      if (iframe.src) {
+        document.getElementById('iframeLoadingSpinner').classList.remove('hidden');
+        iframe.src = iframe.src;
+      }
+    }
+
+    function openInNewTab() {
+      if (activePlayingGame && activePlayingGame.url) {
+        window.open(activePlayingGame.url, '_blank');
+      }
+    }
+
+    function closeGamePlayer() {
+      soundClick();
+      document.getElementById('gamePlayerModal').classList.add('hidden');
+      document.getElementById('gameIframe').src = '';
+      activePlayingGame = null;
+    }
+
+    /* ---------------------------------------------------------
+       8. MODAL FORMULIR EDIT & TAMBAH GAME (HANYA GURU)
+       --------------------------------------------------------- */
+    function openGameEditorModal(gameId = null) {
+      if (!isTeacherMode) {
+        showToast('Hanya pengelola (Guru) yang memiliki izin mengubah game!');
+        return;
+      }
+      soundClick();
+
+      const modalTitle = document.getElementById('editorModalTitle');
+      const hiddenId = document.getElementById('editGameId');
+      const emojiIn = document.getElementById('editEmoji');
+      const titleIn = document.getElementById('editTitle');
+      const catIn = document.getElementById('editCategory');
+      const ageIn = document.getElementById('editAgeGroup');
+      const urlIn = document.getElementById('editUrl');
+      const descIn = document.getElementById('editDescription');
+      const tagsIn = document.getElementById('editTags');
+
+      if (gameId) {
+        // Mode Edit Game yang Sudah Ada
+        const game = currentGames.find(g => g.id === gameId);
+        if (!game) return;
+        modalTitle.innerHTML = `<span>✏️</span> <span>Edit Game: ${game.title}</span>`;
+        hiddenId.value = game.id;
+        emojiIn.value = game.emoji || '🎮';
+        titleIn.value = game.title || '';
+        catIn.value = game.category || 'math';
+        ageIn.value = game.ageGroup || '';
+        urlIn.value = game.url || '';
+        descIn.value = game.description || '';
+        tagsIn.value = (game.tags || []).join(', ');
       } else {
-        games.unshift(gameData);
-        showToast('Game baru berhasil ditambahkan! 🚀');
+        // Mode Tambah Game Baru
+        modalTitle.innerHTML = `<span>➕</span> <span>Tambah Game Baru</span>`;
+        hiddenId.value = '';
+        emojiIn.value = '🎮';
+        titleIn.value = '';
+        catIn.value = 'math';
+        ageIn.value = 'Kelas 1 - 3 SD';
+        urlIn.value = '';
+        descIn.value = '';
+        tagsIn.value = '';
       }
 
-      localStorage.setItem('portal_games_v2', JSON.stringify(games));
-      closeGameFormModal();
-      renderGames();
+      document.getElementById('gameEditorModal').classList.remove('hidden');
     }
 
-    function deleteGame(id) {
-      if (confirm('Yakin ingin menghapus game ini dari daftar portofolio?')) {
-        games = games.filter(g => g.id !== id);
-        localStorage.setItem('portal_games_v2', JSON.stringify(games));
-        renderGames();
-        showToast('Game telah dihapus.');
+    function closeGameEditorModal() {
+      document.getElementById('gameEditorModal').classList.add('hidden');
+    }
+
+    function saveGameFromEditor(e) {
+      e.preventDefault();
+      initAudio();
+
+      const gameId = document.getElementById('editGameId').value;
+      const emoji = document.getElementById('editEmoji').value.trim() || '🎮';
+      const title = document.getElementById('editTitle').value.trim();
+      const category = document.getElementById('editCategory').value;
+      const ageGroup = document.getElementById('editAgeGroup').value.trim() || 'Semua Usia';
+      const url = document.getElementById('editUrl').value.trim();
+      const description = document.getElementById('editDescription').value.trim();
+      const tagsStr = document.getElementById('editTags').value.trim();
+      
+      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(t => t.length > 0) : [];
+
+      let categoryLabel = 'Matematika';
+      if (category === 'science') categoryLabel = 'Sains & IPA';
+      if (category === 'logic') categoryLabel = 'Logika & Teka-teki';
+
+      if (gameId) {
+        // Perbarui game yang ada
+        const index = currentGames.findIndex(g => g.id === gameId);
+        if (index !== -1) {
+          currentGames[index] = {
+            ...currentGames[index],
+            title,
+            emoji,
+            category,
+            categoryLabel,
+            ageGroup,
+            url,
+            description,
+            tags
+          };
+          showToast(`Game "${title}" berhasil diperbarui! ✨`);
+        }
+      } else {
+        // Buat ID baru
+        const newId = 'game-' + Date.now();
+        currentGames.unshift({
+          id: newId,
+          title,
+          emoji,
+          category,
+          categoryLabel,
+          ageGroup,
+          url,
+          description,
+          tags
+        });
+        showToast(`Game baru "${title}" berhasil ditambahkan! 🚀`);
       }
+
+      saveGamesToStorage();
+      closeGameEditorModal();
+      soundFanfare();
+      renderGamesGrid();
     }
 
-    // Notifikasi Toast
-    function showToast(text) {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      toastMsg.textContent = text;
+    function deleteGame(gameId) {
+      if (!isTeacherMode) return;
+      const game = currentGames.find(g => g.id === gameId);
+      if (!game) return;
+
+      pendingDeleteGameId = gameId;
+      document.getElementById('deleteTargetTitle').textContent = `Hapus game "${game.title}" dari portofolio?`;
+      document.getElementById('deleteConfirmModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteConfirmModal').classList.add('hidden');
+      pendingDeleteGameId = null;
+    }
+
+    function executeDeleteGame() {
+      if (!pendingDeleteGameId) return;
+      const targetId = pendingDeleteGameId;
+      const game = currentGames.find(g => g.id === targetId);
+      const title = game ? game.title : '';
+
+      currentGames = currentGames.filter(g => g.id !== targetId);
+      saveGamesToStorage();
+      closeDeleteModal();
+      soundClick();
+      renderGamesGrid();
+      showToast(`Game "${title}" telah berhasil dihapus.`);
+    }
+
+    /* ---------------------------------------------------------
+       9. FITUR EKSPOR KODE UNTUK GITHUB (PERMANEN)
+       --------------------------------------------------------- */
+    function openExportModal() {
+      soundClick();
+      const codeArea = document.getElementById('exportCodeArea');
+      codeArea.value = JSON.stringify(currentGames, null, 2);
+      document.getElementById('exportModal').classList.remove('hidden');
+    }
+
+    function closeExportModal() {
+      document.getElementById('exportModal').classList.add('hidden');
+    }
+
+    function copyExportedCode() {
+      const codeArea = document.getElementById('exportCodeArea');
+      codeArea.select();
+      navigator.clipboard.writeText(codeArea.value).then(() => {
+        soundFanfare();
+        showToast('Kode berhasil disalin! Tinggal tempel di GitHub.');
+      });
+    }
+
+    /* ---------------------------------------------------------
+       10. TOAST NOTIFICATION UTILITY
+       --------------------------------------------------------- */
+    function showToast(msg) {
+      const toast = document.getElementById('toastMessage');
+      toast.textContent = msg;
       toast.classList.remove('opacity-0', '-translate-y-4');
       toast.classList.add('opacity-100', 'translate-y-0');
 
-      clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => {
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
         toast.classList.remove('opacity-100', 'translate-y-0');
         toast.classList.add('opacity-0', '-translate-y-4');
-      }, 3000);
+      }, 2500);
     }
 
-    // Jalankan Saat Halaman Terbuka
-    window.onload = loadInitialData;
+    /* ---------------------------------------------------------
+       INISIALISASI SAAT HALAMAN DIMUAT
+       --------------------------------------------------------- */
+    window.onload = function() {
+      initData();
+      renderGamesGrid();
+      applyTeacherModeUI();
+    };
   </script>
 </body>
 </html>
