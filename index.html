@@ -975,14 +975,28 @@
       const game = currentGames.find(g => g.id === gameId);
       if (!game) return;
 
-      const confirmDelete = confirm(`Apakah Bapak/Ibu yakin ingin menghapus game "${game.title}" dari portofolio?`);
-      if (confirmDelete) {
-        currentGames = currentGames.filter(g => g.id !== gameId);
-        saveGamesToStorage();
-        soundClick();
-        renderGamesGrid();
-        showToast(`Game "${game.title}" telah dihapus.`);
-      }
+      pendingDeleteGameId = gameId;
+      document.getElementById('deleteTargetTitle').textContent = `Hapus game "${game.title}" dari portofolio?`;
+      document.getElementById('deleteConfirmModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteConfirmModal').classList.add('hidden');
+      pendingDeleteGameId = null;
+    }
+
+    function executeDeleteGame() {
+      if (!pendingDeleteGameId) return;
+      const targetId = pendingDeleteGameId;
+      const game = currentGames.find(g => g.id === targetId);
+      const title = game ? game.title : '';
+
+      currentGames = currentGames.filter(g => g.id !== targetId);
+      saveGamesToStorage();
+      closeDeleteModal();
+      soundClick();
+      renderGamesGrid();
+      showToast(`Game "${title}" telah berhasil dihapus.`);
     }
 
     /* ---------------------------------------------------------
