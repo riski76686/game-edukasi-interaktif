@@ -98,11 +98,14 @@
 
     <!-- BANNER PEMBERITAHUAN MODE GURU AKTIF (Hanya tampil saat mode guru aktif) -->
     <div id="adminModeBanner" class="hidden bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 text-amber-950 font-extrabold px-4 py-2 border-t-2 border-b-2 border-amber-600 text-xs sm:text-sm shadow-inner flex items-center justify-between">
-      <div class="flex items-center gap-2 max-w-4xl mx-auto w-full justify-between">
+      <div class="flex items-center gap-2 max-w-4xl mx-auto w-full justify-between flex-wrap">
         <span class="flex items-center gap-1.5">
           <span>👑</span> <b>Mode Pengelola / Guru Aktif:</b> Anda sekarang dapat menambah, mengedit, dan menghapus game.
         </span>
         <div class="flex items-center gap-2">
+          <button onclick="openChangePinModal()" class="bg-amber-900/15 hover:bg-amber-900/30 text-amber-950 px-2.5 py-1 rounded-xl text-[11px] font-bold border border-amber-900/30 flex items-center gap-1 transition-colors">
+            🔑 Ganti PIN
+          </button>
           <button onclick="openExportModal()" class="bg-white/90 hover:bg-white text-indigo-950 px-2.5 py-1 rounded-xl text-[11px] font-bold shadow-xs">
             📋 Salin Kode GitHub
           </button>
@@ -261,12 +264,12 @@
       </div>
       <h3 class="text-lg font-black text-indigo-950">Akses Pengelola (Mode Guru)</h3>
       <p class="text-xs text-slate-500 font-sans-alt mt-1 mb-4">
-        Masukkan PIN keamanan Anda untuk mengaktifkan fitur edit, tambah, dan hapus game.
+        Masukkan PIN rahasia untuk membuka hak akses pengeditan portofolio.
       </p>
 
       <div class="space-y-3">
         <div>
-          <input type="password" id="adminPinInput" maxlength="8" placeholder="Masukkan PIN (Default: 1234)" class="w-full text-center tracking-widest text-lg font-black py-2.5 bg-slate-50 border-2 border-indigo-200 focus:border-indigo-500 rounded-2xl focus:outline-none">
+          <input type="password" id="adminPinInput" maxlength="12" placeholder="••••" class="w-full text-center tracking-widest text-2xl font-black py-2.5 bg-slate-50 border-2 border-indigo-200 focus:border-indigo-500 rounded-2xl focus:outline-none">
         </div>
         <div class="flex gap-2">
           <button onclick="closeAdminModal()" class="w-1/2 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs sm:text-sm rounded-xl">
@@ -276,7 +279,43 @@
             Buka Kunci 🔓
           </button>
         </div>
-        <p class="text-[10px] text-slate-400 font-sans-alt">PIN bawaan awal adalah <b>1234</b>. PIN dapat diubah setelah Anda masuk.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 1B: GANTI PIN KEAMANAN GURU
+       ======================================================== -->
+  <div id="changePinModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl border-4 border-amber-400 max-w-sm w-full p-5 sm:p-6 shadow-2xl text-slate-800 text-center">
+      <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-2 border-2 border-amber-300">
+        🔑
+      </div>
+      <h3 class="text-base sm:text-lg font-black text-indigo-950">Ubah PIN Keamanan Guru</h3>
+      <p class="text-xs text-slate-500 font-sans-alt mt-0.5 mb-3">Buat PIN baru yang hanya Anda ketahui.</p>
+
+      <div class="space-y-2.5 text-left font-sans-alt text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">PIN Lama Saat Ini</label>
+          <input type="password" id="oldPinInput" maxlength="12" placeholder="Masukkan PIN lama" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">PIN Baru (Minimal 4 Angka/Karakter)</label>
+          <input type="password" id="newPinInput" maxlength="12" placeholder="PIN baru" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Ulangi PIN Baru</label>
+          <input type="password" id="confirmNewPinInput" maxlength="12" placeholder="Ulangi PIN baru" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none text-center tracking-widest font-bold">
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button onclick="closeChangePinModal()" class="w-1/3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs">
+            Batal
+          </button>
+          <button onclick="saveNewPin()" class="w-2/3 py-2 bg-amber-500 hover:bg-amber-600 text-amber-950 font-black rounded-xl shadow-md text-xs">
+            Simpan PIN Baru 💾
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -427,13 +466,25 @@
        2. MANAJEMEN PENYIMPANAN LOKAL (LOCALSTORAGE)
        --------------------------------------------------------- */
     const STORAGE_KEY_GAMES = 'portfolio_game_list_v2';
-    const STORAGE_KEY_PIN = 'portfolio_teacher_pin';
+    const STORAGE_KEY_PIN_HASH = 'portfolio_teacher_pinhash_v1';
+    
+    // Hash SHA-256 bawaan awal (default PIN sebelum Anda ganti sendiri)
+    // Angka PIN asli tidak tertulis dalam kode sumber
+    const DEFAULT_PIN_HASH = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
 
     let currentGames = [];
     let isTeacherMode = false;
     let selectedCategory = 'all';
     let searchQuery = '';
     let activePlayingGame = null;
+
+    // Fungsi utilitas enkripsi satu arah SHA-256
+    async function hashPinString(pin) {
+      const utf8 = new TextEncoder().encode(pin);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
     function initData() {
       const saved = localStorage.getItem(STORAGE_KEY_GAMES);
@@ -443,6 +494,19 @@
         } catch (e) {
           currentGames = [...DEFAULT_GAMES];
         }
+      } else {
+        currentGames = [...DEFAULT_GAMES];
+        saveGamesToStorage();
+      }
+    }
+
+    function saveGamesToStorage() {
+      localStorage.setItem(STORAGE_KEY_GAMES, JSON.stringify(currentGames));
+    }
+
+    function getTeacherPinHash() {
+      return localStorage.getItem(STORAGE_KEY_PIN_HASH) || DEFAULT_PIN_HASH;
+    }
       } else {
         currentGames = [...DEFAULT_GAMES];
         saveGamesToStorage();
@@ -522,12 +586,13 @@
       document.getElementById('adminAuthModal').classList.add('hidden');
     }
 
-    function verifyAdminPin() {
+    async function verifyAdminPin() {
       initAudio();
       const input = document.getElementById('adminPinInput').value.trim();
-      const correctPin = getTeacherPin();
+      const targetHash = getTeacherPinHash();
+      const inputHash = await hashPinString(input);
 
-      if (input === correctPin) {
+      if (inputHash === targetHash) {
         isTeacherMode = true;
         closeAdminModal();
         applyTeacherModeUI();
@@ -537,6 +602,50 @@
         playTone(200, 'sawtooth', 0.2, 0.2);
         showToast('PIN salah! Silakan coba lagi.');
       }
+    }
+
+    /* SISTEM GANTI PIN */
+    function openChangePinModal() {
+      soundClick();
+      document.getElementById('oldPinInput').value = '';
+      document.getElementById('newPinInput').value = '';
+      document.getElementById('confirmNewPinInput').value = '';
+      document.getElementById('changePinModal').classList.remove('hidden');
+    }
+
+    function closeChangePinModal() {
+      document.getElementById('changePinModal').classList.add('hidden');
+    }
+
+    async function saveNewPin() {
+      const oldPin = document.getElementById('oldPinInput').value.trim();
+      const newPin = document.getElementById('newPinInput').value.trim();
+      const confirmPin = document.getElementById('confirmNewPinInput').value.trim();
+
+      const currentHash = getTeacherPinHash();
+      const oldHash = await hashPinString(oldPin);
+
+      if (oldHash !== currentHash) {
+        showToast('PIN lama tidak sesuai!');
+        playTone(200, 'sawtooth', 0.2, 0.2);
+        return;
+      }
+
+      if (newPin.length < 4) {
+        showToast('PIN baru minimal harus 4 karakter!');
+        return;
+      }
+
+      if (newPin !== confirmPin) {
+        showToast('Konfirmasi PIN baru tidak cocok!');
+        return;
+      }
+
+      const newHash = await hashPinString(newPin);
+      localStorage.setItem(STORAGE_KEY_PIN_HASH, newHash);
+      closeChangePinModal();
+      soundFanfare();
+      showToast('PIN Keamanan Guru berhasil diperbarui! 🔒');
     }
 
     function applyTeacherModeUI() {
