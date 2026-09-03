@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Koleksi Game Edukasi Saya - Portofolio Interaktif</title>
+  <title>Portal Game Pembelajaran Interaktif - Karya Edukasi Siswa</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -30,496 +30,333 @@
       background: #cbd5e1;
       border-radius: 8px;
     }
-    @keyframes floatSoft {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-    .animate-float {
-      animation: floatSoft 3.5s ease-in-out infinite;
-    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-  <!-- NAVBAR UTAMA -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+  <!-- NAVBAR / HEADER -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-amber-400 flex items-center justify-center text-white text-xl shadow-md animate-float">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white text-xl shadow-md shadow-indigo-200">
           🎮
         </div>
         <div>
-          <h1 class="font-brand text-lg sm:text-xl font-bold text-slate-900 tracking-wide flex items-center gap-1.5">
-            EduGame <span class="text-purple-600">Lab</span>
-          </h1>
-          <p class="text-[11px] text-slate-500 font-medium">Studio Portofolio Game Pembelajaran Interaktif</p>
+          <a href="#" class="font-brand text-xl font-bold text-slate-900 tracking-tight block leading-none">Ruang EduGame</a>
+          <span class="text-[11px] font-semibold text-indigo-600">Portofolio Game Interaktif Siswa</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-2.5">
-        <button onclick="openAddGameModal()" class="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow-md transition-all">
-          <span>✨</span>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openAddGameModal()" class="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-indigo-200 transition-transform active:scale-95">
+          <span>➕</span>
           <span class="hidden sm:inline">Tambah Game Baru</span>
           <span class="sm:hidden">Tambah</span>
-        </button>
-        <button onclick="openPlatformGuideModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm transition-all border border-slate-200" title="Panduan Menempelkan Game">
-          <span>📖</span>
-          <span class="hidden md:inline">Panduan Semat</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- HERO BANNER & KONTROL FILTER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900 via-indigo-900 to-sky-900 text-white p-6 sm:p-10 shadow-xl">
-      <div class="relative z-10 max-w-2xl space-y-3">
-        <span class="px-3 py-1 bg-amber-400 text-amber-950 font-bold text-xs rounded-full uppercase tracking-wider inline-flex items-center gap-1">
-          <span>🚀</span> Siap Dimainkan Kapan Saja
-        </span>
-        <h2 class="font-brand text-2xl sm:text-4xl font-extrabold leading-tight">
-          Pusat Eksplorasi & Game Belajar Siswa
-        </h2>
-        <p class="text-xs sm:text-sm text-purple-100 leading-relaxed">
-          Kumpulan media pembelajaran matematika, logika angka, dan penalaran yang dirancang khusus untuk meningkatkan ketangkasan berhitung anak-anak secara menyenangkan.
-        </p>
-      </div>
-      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute right-12 top-1/2 -translate-y-1/2 text-7xl hidden lg:block opacity-80 animate-float">
-        💎
-      </div>
-    </div>
+  <!-- HERO SECTION -->
+  <section class="relative bg-gradient-to-b from-indigo-50/70 via-white to-slate-50 py-10 sm:py-14 border-b border-slate-200/60 overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100/80 text-indigo-800 mb-4 border border-indigo-200/80 shadow-xs">
+        ✨ Koleksi Media Pembelajaran Berbasis Permainan
+      </span>
+      <h1 class="font-brand text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        Belajar Jadi Menyenangkan dengan <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Game Edukasi</span>
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed mb-6">
+        Kumpulan permainan digital interaktif yang dirancang untuk melatih logika berpikir, kecepatan berhitung, serta kemampuan kognitif anak secara bertahap dan menyenangkan.
+      </p>
 
-    <!-- PENCARIAN & TAB KATEGORI -->
-    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
-      <!-- Tab Kategori -->
-      <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 text-xs font-bold" id="categoryTabs">
-        <button onclick="setCategoryFilter('all')" class="category-btn active px-3.5 py-2 rounded-xl bg-purple-600 text-white shadow-sm transition-all whitespace-nowrap" data-category="all">
-          Semua Game (<span id="countAll">0</span>)
-        </button>
-        <button onclick="setCategoryFilter('matematika')" class="category-btn px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 text-slate-600 border border-slate-200 transition-all whitespace-nowrap" data-category="matematika">
-          🔢 Matematika
-        </button>
-        <button onclick="setCategoryFilter('logika')" class="category-btn px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 text-slate-600 border border-slate-200 transition-all whitespace-nowrap" data-category="logika">
-          🧩 Logika & Pola
-        </button>
-        <button onclick="setCategoryFilter('memori')" class="category-btn px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 text-slate-600 border border-slate-200 transition-all whitespace-nowrap" data-category="memori">
-          🧠 Asah Memori
-        </button>
-      </div>
-
-      <!-- Kotak Pencarian -->
-      <div class="relative min-w-[240px]">
-        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Cari nama game atau topik..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none shadow-xs">
-        <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+      <!-- BAR PENCARIAN & STATISTIK RINGKAS -->
+      <div class="max-w-xl mx-auto flex gap-2">
+        <div class="relative flex-1">
+          <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400">🔍</span>
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Cari judul game, topik, atau mata pelajaran..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white shadow-xs">
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- GRID DAFTAR GAME -->
-    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Kartu-kartu game dirender otomatis via JavaScript -->
+  <!-- KONTEN UTAMA: FILTER & DAFTAR GAME -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <!-- FILTER KATEGORI -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-3 custom-scrollbar mb-6">
+      <button onclick="filterCategory('all')" id="tab-all" class="category-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-xs">
+        Semua Kategori
+      </button>
+      <button onclick="filterCategory('math')" id="tab-math" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
+        🧮 Matematika
+      </button>
+      <button onclick="filterCategory('science')" id="tab-science" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
+        🔬 Sains & Alam
+      </button>
+      <button onclick="filterCategory('language')" id="tab-language" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
+        📚 Bahasa & Literasi
+      </button>
+      <button onclick="filterCategory('logic')" id="tab-logic" class="category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200">
+        🧩 Teka-teki & Logika
+      </button>
     </div>
 
-    <!-- Tampilan Kosong Jika Game Tidak Ditemukan -->
-    <div id="emptyState" class="hidden text-center py-16 px-4 bg-white rounded-3xl border-2 border-dashed border-slate-200">
-      <div class="text-4xl mb-2">🔍</div>
-      <h3 class="font-brand text-base sm:text-lg font-bold text-slate-700">Tidak ada game yang sesuai</h3>
-      <p class="text-xs text-slate-400 max-w-sm mx-auto mt-1">Coba kata kunci pencarian lain atau pilih kategori yang berbeda.</p>
+    <!-- GRID KARTU PERMAINAN -->
+    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Kartu-kartu game diisi oleh JavaScript -->
+    </div>
+
+    <!-- TAMPILAN KOSONG / EMPTY STATE -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3">
+        🔍
+      </div>
+      <h3 class="font-brand text-lg font-bold text-slate-800">Game tidak ditemukan</h3>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">Coba gunakan kata kunci pencarian yang lain atau reset filter.</p>
     </div>
   </main>
 
   <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4">
-      <p class="font-medium">Dikembangkan untuk Media Pembelajaran Interaktif Sekolah & Keluarga.</p>
-      <p class="text-[11px] text-slate-400 mt-1">Siap disematkan pada Google Sites, Canva, Blog, atau Portal Guru.</p>
+      <p class="font-semibold text-slate-700 font-brand text-sm">Ruang EduGame &copy; Portal Portofolio Game Siswa</p>
+      <p class="mt-1">Dibuat dengan ❤️ untuk mendukung pembelajaran mandiri yang aktif, kreatif, dan menyenangkan.</p>
     </div>
   </footer>
 
-  <!-- MODAL PEMUTAR GAME (IFRAME PLAYER LANGSUNG) -->
-  <div id="gamePlayerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 hidden">
-    <div class="bg-slate-900 rounded-3xl border border-slate-700 w-full max-w-5xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
-      <!-- Bar Atas Player -->
-      <div class="h-14 px-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between text-white flex-shrink-0">
-        <div class="flex items-center gap-2.5 overflow-hidden pr-2">
-          <span id="playerGameIcon" class="text-2xl flex-shrink-0">💎</span>
+  <!-- MODAL PEMUTAR GAME (EMBED PLAYER) -->
+  <div id="playerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div class="bg-white rounded-3xl w-full max-w-5xl h-[92vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
+      <!-- Modal Header -->
+      <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5 overflow-hidden">
+          <span id="playerEmoji" class="text-2xl">🎮</span>
           <div class="truncate">
-            <h3 id="playerGameTitle" class="font-brand font-bold text-sm sm:text-base leading-none truncate">Petualangan Kristal Angka</h3>
-            <span id="playerGameBadge" class="text-[10px] text-purple-300 font-semibold uppercase tracking-wider">Matematika</span>
+            <h3 id="playerTitle" class="font-bold text-sm sm:text-base leading-tight truncate">Judul Game</h3>
+            <p id="playerCategory" class="text-[11px] text-slate-400 font-medium">Kategori Game</p>
           </div>
         </div>
-
-        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-          <button onclick="reloadCurrentIframe()" class="p-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold transition-all" title="Muat Ulang Game">
-            🔄
-          </button>
-          <button onclick="openInNewTab()" class="p-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold transition-all" title="Buka di Tab Baru">
-            ↗️
-          </button>
-          <button onclick="toggleFullscreenIframe()" class="p-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold transition-all" title="Layar Penuh">
-            ⛶
-          </button>
-          <button onclick="closeGamePlayer()" class="w-8 h-8 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm flex items-center justify-center ml-1 transition-all">
+        
+        <div class="flex items-center gap-2">
+          <a id="playerDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors" title="Buka di tab baru">
+            <span>↗</span>
+            <span class="hidden sm:inline">Buka Tab Baru</span>
+          </a>
+          <button onclick="closePlayerModal()" class="w-8 h-8 rounded-xl bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center font-bold text-sm transition-colors" title="Tutup">
             ✕
           </button>
         </div>
       </div>
 
-      <!-- Wadah Iframe Game -->
-      <div class="flex-1 bg-slate-950 relative w-full h-full flex items-center justify-center">
-        <div id="playerLoadingSpinner" class="absolute flex flex-col items-center gap-2 text-slate-400 text-xs font-bold">
-          <div class="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-          <span>Memuat Game...</span>
+      <!-- Iframe Container -->
+      <div class="flex-1 bg-slate-100 relative">
+        <div id="iframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-white z-10 transition-opacity">
+          <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-3"></div>
+          <p class="text-xs sm:text-sm font-semibold tracking-wide text-slate-300">Memuat game edukasi...</p>
         </div>
-        <iframe id="gameIframe" src="" class="w-full h-full border-0 relative z-10" allow="fullscreen; autoplay; clipboard-write;" onload="onIframeLoaded()"></iframe>
+        <iframe id="gameIframe" src="" class="w-full h-full border-0" allow="autoplay; fullscreen; microphone; camera" onload="hideIframeLoader()"></iframe>
       </div>
     </div>
   </div>
 
-  <!-- MODAL TAMBAH GAME KE PORTOFOLIO -->
-  <div id="addGameModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl border-4 border-purple-300 max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="font-brand text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-          <span>✨</span> Tambah Game ke Portofolio
+  <!-- MODAL TAMBAH GAME BARU -->
+  <div id="addGameModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-brand text-lg font-bold text-slate-900 flex items-center gap-2">
+          <span>➕</span> Tambah Game ke Portofolio
         </h3>
-        <button onclick="closeAddGameModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center">✕</button>
+        <button onclick="closeAddGameModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 font-bold text-xs flex items-center justify-center">✕</button>
       </div>
 
-      <form id="addGameForm" onsubmit="handleSaveGame(event)" class="space-y-3.5 text-xs sm:text-sm">
+      <form id="addGameForm" onsubmit="saveNewGame(event)" class="space-y-3 text-xs sm:text-sm">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Judul Game:</label>
-          <input type="text" id="newTitle" required placeholder="Contoh: Petualangan Kristal Angka" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none">
+          <input type="text" id="newTitle" required placeholder="Contoh: Petualangan Kristal Angka" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Ikon Emoji:</label>
-            <select id="newIcon" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none text-base">
-              <option value="💎">💎 Kristal</option>
-              <option value="🦁">🦁 Singa Hitung</option>
-              <option value="🚀">🚀 Roket Angka</option>
-              <option value="🧩">🧩 Teka-Teki</option>
-              <option value="🍎">🍎 Buah Berhitung</option>
-              <option value="⭐">⭐ Bintang Matematika</option>
-              <option value="🐸">🐸 Katak Lompat</option>
-            </select>
+            <label class="block font-bold text-slate-700 mb-1">Ikon / Emoji:</label>
+            <input type="text" id="newEmoji" required value="🎮" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Kategori:</label>
-            <select id="newCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-bold text-slate-700 focus:ring-2 focus:ring-purple-400 focus:outline-none">
-              <option value="matematika">🔢 Matematika</option>
-              <option value="logika">🧩 Logika & Pola</option>
-              <option value="memori">🧠 Asah Memori</option>
+            <select id="newCategory" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+              <option value="math">🧮 Matematika</option>
+              <option value="science">🔬 Sains & Alam</option>
+              <option value="language">📚 Bahasa</option>
+              <option value="logic">🧩 Logika</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Tautan Web App (URL Game):</label>
-          <input type="url" id="newUrl" required placeholder="Tempel URL Google Apps Script / Web Game di sini..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none">
-          <p class="text-[11px] text-slate-500 mt-1">Masukkan URL deployment Google Apps Script (contoh: https://script.google.com/macros/s/.../exec).</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Target Usia / Kelas:</label>
-            <input type="text" id="newAgeGroup" placeholder="Contoh: SD Kelas 1-3 (6-9 Th)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Kemampuan Dilatih:</label>
-            <input type="text" id="newSkill" placeholder="Contoh: Penjumlahan A+B=C" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none">
-          </div>
+          <label class="block font-bold text-slate-700 mb-1">Sasaran Usia / Kelas:</label>
+          <input type="text" id="newAgeGroup" required placeholder="Contoh: Kelas 1 - 3 SD (6-9 Tahun)" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Deskripsi Singkat:</label>
-          <textarea id="newDescription" rows="2" placeholder="Ceritakan bagaimana game ini dimainkan..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-purple-400 focus:outline-none"></textarea>
+          <textarea id="newDesc" rows="2" required placeholder="Jelaskan ringkas materi & tujuan permainan..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
         </div>
 
-        <div class="pt-2 flex items-center justify-end gap-2">
-          <button type="button" onclick="closeAddGameModal()" class="px-4 py-2 rounded-xl text-slate-600 font-bold bg-slate-100 hover:bg-slate-200">Batal</button>
-          <button type="submit" class="px-5 py-2 rounded-xl text-white font-bold bg-purple-600 hover:bg-purple-700 shadow-md">Simpan Game</button>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Tautan Web Game (URL):</label>
+          <input type="url" id="newUrl" required placeholder="https://script.google.com/..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <p class="text-[10px] text-slate-500 mt-0.5">Mendukung link Google Apps Script (/exec) atau website HTML lainnya.</p>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="closeAddGameModal()" class="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-all">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-md shadow-indigo-200">
+            Simpan Game
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL PANDUAN MENEMPELKAN GAME -->
-  <div id="guideModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl border-4 border-indigo-300 max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-        <h3 class="font-brand text-lg font-bold text-slate-900 flex items-center gap-2">
-          <span>📖</span> Cara Menempelkan Game Agar Siap Digunakan
-        </h3>
-        <button onclick="closePlatformGuideModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center">✕</button>
-      </div>
-
-      <div class="py-4 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
-        <div class="p-3.5 bg-purple-50 rounded-2xl border border-purple-200">
-          <h4 class="font-bold text-purple-950 flex items-center gap-1.5 mb-1">
-            <span>🌐</span> 1. Tempelkan di Google Sites (Paling Mudah & Gratis 100%)
-          </h4>
-          <p>Jika sekolah Anda memiliki akun Google Workspace, buka <b>sites.google.com</b>, buat halaman portofolio, klik menu <b>Sematkan (Embed)</b> di panel kanan, lalu pilih <b>Dengan URL</b> dan masukkan link Apps Script Anda. Game akan tampil penuh di halaman web sekolah!</p>
-        </div>
-
-        <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200">
-          <h4 class="font-bold text-emerald-950 flex items-center gap-1.5 mb-1">
-            <span>💻</span> 2. Gunakan Portal HTML Ini Sebagai Beranda
-          </h4>
-          <p>Anda bisa menyimpan file <b>portfolio.html</b> ini di komputer, membukanya di browser apa saja, dan menambahkan tautan game sebanyak yang Anda mau. Semua data game yang Anda tambahkan otomatis tersimpan di peramban Anda.</p>
-        </div>
-
-        <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200">
-          <h4 class="font-bold text-amber-950 flex items-center gap-1.5 mb-1">
-            <span>🚀</span> 3. Publikasikan Sebagai Web Gratis (GitHub Pages / Netlify)
-          </h4>
-          <p>Cukup buat repositori di GitHub, unggah file ini dengan nama <b>index.html</b>, lalu aktifkan fitur GitHub Pages. Anda akan langsung memiliki alamat web portofolio profesional pribadi (misal: <i>namaanda.github.io</i>).</p>
-        </div>
-
-        <!-- Kode Kode Semat Standar -->
-        <div class="bg-slate-900 text-slate-200 p-3 rounded-2xl text-xs font-mono">
-          <div class="text-slate-400 mb-1 text-[11px] font-sans font-bold">Kode Semat HTML (Iframe):</div>
-          <code>&lt;iframe src="URL_GAME_ANDA" width="100%" height="700px" style="border:none; border-radius:16px;" allowfullscreen&gt;&lt;/iframe&gt;</code>
-        </div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-100 text-right">
-        <button onclick="closePlatformGuideModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl text-xs sm:text-sm">
-          Tutup Panduan
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST NOTIFIKASI -->
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900/95 text-white px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl z-50 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-3">
-    Notifikasi
-  </div>
-
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    /* =========================================================
-       DATA DAN STATUS PORTOFOLIO GAME
-       ========================================================= */
-    const STORAGE_KEY_PORTFOLIO = 'my_edugame_portfolio_v1';
-
-    // Data awal bawaan
-    const defaultGames = [
+    // DATA PERMAINAN (Game Google Apps Script Anda disematkan langsung di sini)
+    const DEFAULT_GAMES = [
       {
-        id: 'game-kristal-angka',
+        id: 'kristal-angka',
         title: 'Petualangan Kristal Angka',
-        icon: '💎',
-        category: 'matematika',
-        ageGroup: 'SD Kelas 1-4 (6-10 Th)',
-        skill: 'Fakta Bilangan & A + B = C',
-        description: 'Teka-teki relasi bilangan adaptif dengan 4 pulau satelit dan kristal mahkota puncak. Terintegrasi pencatatan data ke Google Spreadsheet.',
-        // URL bawaan game (bisa diganti dengan link deployment Google Apps Script Anda)
-        url: 'index.html',
-        isDefault: true
-      },
-      {
-        id: 'game-pulau-sepuluh',
-        title: 'Penjelajah Sahabat Sepuluh',
-        icon: '🔟',
-        category: 'matematika',
-        ageGroup: 'TK B - SD Kelas 1',
-        skill: 'Pasangan Angka Penjumlah 10',
-        description: 'Menemukan pasangan angka yang melengkapi jumlah 10 untuk melatih pondasi berhitung cepat sebelum melangkah ke operasi puluhan.',
-        url: 'https://placehold.co/800x600/312e81/ffffff?text=Game+Sahabat+10',
-        isDefault: true
-      },
-      {
-        id: 'game-labirin-pola',
-        title: 'Detektif Pola & Urutan',
-        icon: '🧩',
-        category: 'logika',
-        ageGroup: 'SD Kelas 2-5',
-        skill: 'Pola Deret Bilangan Loncat',
-        description: 'Membantu karakter menemukan jalan keluar dengan menerka kelipatan angka serta urutan pola barisan matematika.',
-        url: 'https://placehold.co/800x600/065f46/ffffff?text=Game+Detektif+Pola',
-        isDefault: true
+        category: 'math',
+        categoryLabel: 'Matematika',
+        ageGroup: 'Kelas 1 - 3 SD',
+        emoji: '💎',
+        description: 'Latihan penalaran relasi bilangan A + B = C dengan 4 pulau kristal, pulau mahkota puncak, fitur bintik hitung, serta cetak laporan analisis belajar.',
+        url: 'https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec',
+        tags: ['Number Bonds', 'Penjumlahan', 'Analisis Otomatis', 'Google Sheet']
       }
     ];
 
-    let gamesList = [];
+    const STORAGE_KEY = 'ruang_edugame_list';
+    let gamesList = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_GAMES;
     let currentCategory = 'all';
     let searchQuery = '';
-    let activePlayingGame = null;
 
-    function initPortfolio() {
-      const stored = localStorage.getItem(STORAGE_KEY_PORTFOLIO);
-      if (stored) {
-        try {
-          gamesList = JSON.parse(stored);
-        } catch (e) {
-          gamesList = defaultGames;
-        }
-      } else {
-        gamesList = defaultGames;
-        savePortfolioData();
-      }
-      renderGamesGrid();
+    function saveGames() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(gamesList));
     }
 
-    function savePortfolioData() {
-      localStorage.setItem(STORAGE_KEY_PORTFOLIO, JSON.stringify(gamesList));
-    }
-
-    function handleSearch(val) {
-      searchQuery = val.trim().toLowerCase();
-      renderGamesGrid();
-    }
-
-    function setCategoryFilter(cat) {
-      currentCategory = cat;
-      const buttons = document.querySelectorAll('.category-btn');
-      buttons.forEach(btn => {
-        if (btn.getAttribute('data-category') === cat) {
-          btn.className = 'category-btn active px-3.5 py-2 rounded-xl bg-purple-600 text-white shadow-sm transition-all whitespace-nowrap font-bold';
-        } else {
-          btn.className = 'category-btn px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 text-slate-600 border border-slate-200 transition-all whitespace-nowrap font-bold';
-        }
-      });
-      renderGamesGrid();
-    }
-
-    function renderGamesGrid() {
-      const container = document.getElementById('gamesGrid');
-      const emptyState = document.getElementById('emptyState');
-      const countAll = document.getElementById('countAll');
-      if (countAll) countAll.textContent = gamesList.length;
+    function renderGames() {
+      const grid = document.getElementById('gamesGrid');
+      const empty = document.getElementById('emptyState');
+      grid.innerHTML = '';
 
       const filtered = gamesList.filter(game => {
         const matchesCat = currentCategory === 'all' || game.category === currentCategory;
-        const matchesQuery = !searchQuery || 
-          game.title.toLowerCase().includes(searchQuery) || 
-          game.skill.toLowerCase().includes(searchQuery) ||
-          game.description.toLowerCase().includes(searchQuery);
-        return matchesCat && matchesQuery;
+        const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              game.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              (game.tags && game.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
+        return matchesCat && matchesSearch;
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        return;
-      }
+        empty.classList.remove('hidden');
+      } else {
+        empty.classList.add('hidden');
+        filtered.forEach(game => {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group';
+          
+          const tagsHtml = (game.tags || []).map(t => 
+            `<span class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${t}</span>`
+          ).join('');
 
-      emptyState.classList.add('hidden');
-      container.innerHTML = '';
-
-      filtered.forEach(game => {
-        const card = document.createElement('div');
-        card.className = 'bg-white rounded-3xl border-2 border-slate-200/90 hover:border-purple-300 shadow-sm hover:shadow-xl transition-all duration-300 p-5 flex flex-col justify-between group';
-
-        const categoryBadge = game.category === 'matematika' 
-          ? '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-200">🔢 Matematika</span>'
-          : game.category === 'logika'
-            ? '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200">🧩 Logika</span>'
-            : '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-100 text-sky-900 border border-sky-200">🧠 Memori</span>';
-
-        card.innerHTML = `
-          <div>
-            <div class="flex items-start justify-between gap-2 mb-3">
-              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-100 border border-purple-200 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-xs">
-                ${game.icon || '🎮'}
+          card.innerHTML = `
+            <div class="p-5 sm:p-6 flex-1">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-3xl shadow-inner group-hover:scale-110 transition-transform">
+                  ${game.emoji || '🎮'}
+                </div>
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  ${game.ageGroup}
+                </span>
               </div>
-              <div class="flex flex-col items-end gap-1">
-                ${categoryBadge}
-                <span class="text-[10px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">${game.ageGroup || 'Semua Usia'}</span>
+
+              <div class="mb-1 text-xs font-bold text-indigo-600 uppercase tracking-wider">
+                ${game.categoryLabel || game.category}
+              </div>
+              <h3 class="font-brand text-lg font-bold text-slate-900 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">
+                ${game.title}
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-4">
+                ${game.description}
+              </p>
+
+              <div class="flex flex-wrap gap-1 mb-2">
+                ${tagsHtml}
               </div>
             </div>
 
-            <h3 class="font-brand text-base sm:text-lg font-bold text-slate-900 group-hover:text-purple-700 transition-colors leading-snug">
-              ${game.title}
-            </h3>
-            
-            <div class="mt-1 flex items-center gap-1 text-xs text-purple-700 font-semibold">
-              <span>🎯</span>
-              <span class="truncate">${game.skill || 'Latihan Konsep'}</span>
-            </div>
-
-            <p class="text-xs text-slate-500 mt-2.5 leading-relaxed line-clamp-3">
-              ${game.description}
-            </p>
-          </div>
-
-          <div class="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-            <button onclick="launchGame('${game.id}')" class="flex-1 py-2.5 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5">
-              <span>▶️</span>
-              <span>Mainkan Sekarang</span>
-            </button>
-
-            <button onclick="copyGameLink('${game.url}')" class="p-2.5 rounded-xl bg-slate-100 hover:bg-purple-100 text-slate-700 hover:text-purple-900 transition-colors" title="Salin Tautan Game">
-              🔗
-            </button>
-
-            ${!game.isDefault ? `
-              <button onclick="deleteGame('${game.id}')" class="p-2.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-400 hover:text-rose-600 transition-colors" title="Hapus dari Portofolio">
-                🗑️
+            <div class="p-4 sm:px-6 bg-slate-50/60 border-t border-slate-100 flex items-center gap-2">
+              <button onclick="launchGame('${game.id}')" class="flex-1 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-100 flex items-center justify-center gap-1.5">
+                <span>▶</span>
+                <span>Mainkan Game</span>
               </button>
-            ` : ''}
-          </div>
-        `;
-        container.appendChild(card);
+              <a href="${game.url}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs transition-colors" title="Buka di tab baru">
+                ↗
+              </a>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.category-pill').forEach(btn => {
+        btn.className = 'category-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white hover:bg-slate-100 text-slate-600 border border-slate-200';
       });
+      const activeBtn = document.getElementById(`tab-${cat}`);
+      if (activeBtn) {
+        activeBtn.className = 'category-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-xs';
+      }
+      renderGames();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      renderGames();
     }
 
     function launchGame(gameId) {
       const game = gamesList.find(g => g.id === gameId);
       if (!game) return;
 
-      activePlayingGame = game;
-      document.getElementById('playerGameIcon').textContent = game.icon || '🎮';
-      document.getElementById('playerGameTitle').textContent = game.title;
-      document.getElementById('playerGameBadge').textContent = game.category;
+      document.getElementById('playerEmoji').textContent = game.emoji || '🎮';
+      document.getElementById('playerTitle').textContent = game.title;
+      document.getElementById('playerCategory').textContent = `${game.categoryLabel || game.category} • ${game.ageGroup}`;
+      document.getElementById('playerDirectLink').href = game.url;
 
       const iframe = document.getElementById('gameIframe');
-      const spinner = document.getElementById('playerLoadingSpinner');
-      spinner.classList.remove('hidden');
+      const loader = document.getElementById('iframeLoader');
 
+      loader.classList.remove('opacity-0', 'pointer-events-none');
       iframe.src = game.url;
-      document.getElementById('gamePlayerModal').classList.remove('hidden');
+
+      document.getElementById('playerModal').classList.remove('hidden');
     }
 
-    function onIframeLoaded() {
-      const spinner = document.getElementById('playerLoadingSpinner');
-      if (spinner) spinner.classList.add('hidden');
+    function hideIframeLoader() {
+      const loader = document.getElementById('iframeLoader');
+      if (loader) {
+        loader.classList.add('opacity-0', 'pointer-events-none');
+      }
     }
 
-    function closeGamePlayer() {
-      const modal = document.getElementById('gamePlayerModal');
+    function closePlayerModal() {
       const iframe = document.getElementById('gameIframe');
       iframe.src = '';
-      modal.classList.add('hidden');
-      activePlayingGame = null;
-    }
-
-    function reloadCurrentIframe() {
-      const iframe = document.getElementById('gameIframe');
-      const spinner = document.getElementById('playerLoadingSpinner');
-      if (spinner) spinner.classList.remove('hidden');
-      if (iframe.src) iframe.src = iframe.src;
-    }
-
-    function openInNewTab() {
-      if (activePlayingGame && activePlayingGame.url) {
-        window.open(activePlayingGame.url, '_blank');
-      }
-    }
-
-    function toggleFullscreenIframe() {
-      const iframe = document.getElementById('gameIframe');
-      if (!document.fullscreenElement) {
-        if (iframe.requestFullscreen) {
-          iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) {
-          iframe.webkitRequestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-      }
+      document.getElementById('playerModal').classList.add('hidden');
     }
 
     function openAddGameModal() {
@@ -531,80 +368,42 @@
       document.getElementById('addGameForm').reset();
     }
 
-    function openPlatformGuideModal() {
-      document.getElementById('guideModal').classList.remove('hidden');
-    }
-
-    function closePlatformGuideModal() {
-      document.getElementById('guideModal').classList.add('hidden');
-    }
-
-    function handleSaveGame(e) {
+    function saveNewGame(e) {
       e.preventDefault();
       const title = document.getElementById('newTitle').value.trim();
-      const icon = document.getElementById('newIcon').value;
+      const emoji = document.getElementById('newEmoji').value.trim() || '🎮';
       const category = document.getElementById('newCategory').value;
+      const ageGroup = document.getElementById('newAgeGroup').value.trim();
+      const desc = document.getElementById('newDesc').value.trim();
       const url = document.getElementById('newUrl').value.trim();
-      const ageGroup = document.getElementById('newAgeGroup').value.trim() || 'Semua Tingkat';
-      const skill = document.getElementById('newSkill').value.trim() || 'Latihan Konsep';
-      const description = document.getElementById('newDescription').value.trim() || 'Media permainan matematika interaktif.';
 
-      if (!title || !url) {
-        showToast('Judul dan URL game wajib diisi!');
-        return;
-      }
-
-      const newGame = {
-        id: 'game-' + Date.now(),
-        title,
-        icon,
-        category,
-        url,
-        ageGroup,
-        skill,
-        description,
-        isDefault: false
+      const catLabels = {
+        math: 'Matematika',
+        science: 'Sains & Alam',
+        language: 'Bahasa',
+        logic: 'Logika'
       };
 
-      gamesList.unshift(newGame);
-      savePortfolioData();
-      renderGamesGrid();
+      const newGameObj = {
+        id: 'game-' + Date.now(),
+        title: title,
+        category: category,
+        categoryLabel: catLabels[category] || 'Umum',
+        ageGroup: ageGroup,
+        emoji: emoji,
+        description: desc,
+        url: url,
+        tags: [catLabels[category], 'Baru']
+      };
+
+      gamesList.unshift(newGameObj);
+      saveGames();
+      renderGames();
       closeAddGameModal();
-      showToast(`Game "${title}" berhasil ditambahkan ke portofolio! 🎉`);
-    }
-
-    function deleteGame(gameId) {
-      gamesList = gamesList.filter(g => g.id !== gameId);
-      savePortfolioData();
-      renderGamesGrid();
-      showToast('Game telah dihapus dari portofolio.');
-    }
-
-    function copyGameLink(url) {
-      const tempInput = document.createElement('input');
-      tempInput.value = url;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      showToast('Tautan game disalin ke clipboard! 📋');
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.remove('opacity-0', 'translate-y-3');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      clearTimeout(toast._timer);
-      toast._timer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3');
-      }, 2500);
     }
 
     window.onload = function() {
-      initPortfolio();
+      renderGames();
     };
   </script>
 </body>
