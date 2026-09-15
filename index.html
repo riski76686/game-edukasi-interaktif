@@ -238,7 +238,6 @@
       flex: 1;
       justify-content: center;
     }
-    /* Modal Popup */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -269,7 +268,6 @@
       font-size: 14px;
       outline: none;
     }
-    /* Toast */
     #toast {
       position: fixed;
       top: 15px;
@@ -373,7 +371,7 @@
       <h3 id="formTitle" style="font-size:18px; margin-bottom:12px;">Tambah Game</h3>
       <input type="hidden" id="gameId">
       
-      <label style="font-size:12px; font-weight:700;">Ikon Emoji (cth: 💎 / 🧪)</label>
+      <label style="font-size:12px; font-weight:700;">Ikon Emoji (cth: 💡 / 💎 / 🧪)</label>
       <input type="text" id="gameEmoji" value="🎮">
 
       <label style="font-size:12px; font-weight:700;">Judul Game</label>
@@ -399,7 +397,7 @@
   </div>
 
   <script>
-    // Data bawaan game (Tautan game IPA kedua sudah terpasang)
+    // Koleksi game bawaan (Sudah berisi Kristal Angka, PELITA, dan Lab Warna)
     var initialGames = [
       {
         id: "kristal-angka",
@@ -411,13 +409,22 @@
         url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbx7ZUooYjemxDaa_PYSFl3ZTavDViJDklcbVg2Nb0wqlh8CPT-syazgzZ60xao9HXuTrQ/exec"
       },
       {
+        id: "game-pelita",
+        emoji: "💡",
+        title: "PELITA",
+        category: "math",
+        categoryText: "Matematika",
+        desc: "Membantu murid memahami soal cerita tentang pecahan secara visual dan menyenangkan.",
+        url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
+      },
+      {
         id: "lab-warna",
         emoji: "🧪",
         title: "Lab Maya Campur Warna IPA",
         category: "science",
         categoryText: "IPA / Sains",
         desc: "Eksperimen mencampur pigmen warna primer & sekunder dengan takaran cairan persentase.",
-        url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
+        url: "#"
       }
     ];
 
@@ -431,7 +438,8 @@
         localStorage.setItem('guru_pin_kunci', '1234');
       }
 
-      var saved = localStorage.getItem('portal_games_list_data_v2');
+      // Gunakan v3 untuk memastikan data lama di HP/laptop tereset ke 3 game ini
+      var saved = localStorage.getItem('portal_games_list_data_v3');
       if (saved) {
         try {
           gamesList = JSON.parse(saved);
@@ -627,7 +635,7 @@
         gamesList.unshift(dataObj);
       }
 
-      localStorage.setItem('portal_games_list_data_v2', JSON.stringify(gamesList));
+      localStorage.setItem('portal_games_list_data_v3', JSON.stringify(gamesList));
       closeModal('formModal');
       renderGames();
       showToast('Game berhasil disimpan! ✨');
@@ -635,7 +643,7 @@
 
     function deleteGameItem(id) {
       gamesList = gamesList.filter(function(g) { return g.id !== id; });
-      localStorage.setItem('portal_games_list_data_v2', JSON.stringify(gamesList));
+      localStorage.setItem('portal_games_list_data_v3', JSON.stringify(gamesList));
       renderGames();
       showToast('Game telah dihapus.');
     }
