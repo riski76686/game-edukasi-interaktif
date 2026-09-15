@@ -93,7 +93,7 @@
       display: none;
     }
     .container {
-      max-w: 1100px;
+      max-width: 1100px;
       width: 100%;
       margin: 0 auto;
       padding: 20px;
@@ -399,7 +399,7 @@
   </div>
 
   <script>
-    // Data bawaan game
+    // Data bawaan game (Tautan game IPA kedua sudah terpasang)
     var initialGames = [
       {
         id: "kristal-angka",
@@ -417,7 +417,7 @@
         category: "science",
         categoryText: "IPA / Sains",
         desc: "Eksperimen mencampur pigmen warna primer & sekunder dengan takaran cairan persentase.",
-        url: "#"
+        url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
       }
     ];
 
@@ -427,12 +427,11 @@
 
     // Inisialisasi awal
     function init() {
-      // Selalu amankan PIN default 1234 jika belum ada
       if (!localStorage.getItem('guru_pin_kunci')) {
         localStorage.setItem('guru_pin_kunci', '1234');
       }
 
-      var saved = localStorage.getItem('portal_games_list_data');
+      var saved = localStorage.getItem('portal_games_list_data_v2');
       if (saved) {
         try {
           gamesList = JSON.parse(saved);
@@ -628,7 +627,7 @@
         gamesList.unshift(dataObj);
       }
 
-      localStorage.setItem('portal_games_list_data', JSON.stringify(gamesList));
+      localStorage.setItem('portal_games_list_data_v2', JSON.stringify(gamesList));
       closeModal('formModal');
       renderGames();
       showToast('Game berhasil disimpan! ✨');
@@ -636,7 +635,7 @@
 
     function deleteGameItem(id) {
       gamesList = gamesList.filter(function(g) { return g.id !== id; });
-      localStorage.setItem('portal_games_list_data', JSON.stringify(gamesList));
+      localStorage.setItem('portal_games_list_data_v2', JSON.stringify(gamesList));
       renderGames();
       showToast('Game telah dihapus.');
     }
@@ -652,7 +651,6 @@
       }, 2500);
     }
 
-    // Enter Key shortcut di PIN
     document.getElementById('pinInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') submitPin();
     });
