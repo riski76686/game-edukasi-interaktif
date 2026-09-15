@@ -92,6 +92,11 @@
       color: #ffffff;
       display: none;
     }
+    .btn-sync {
+      background: #e0e7ff;
+      color: #4338ca;
+      border: 1px solid #c7d2fe;
+    }
     .container {
       max-width: 1100px;
       width: 100%;
@@ -308,13 +313,13 @@
       </div>
     </div>
     <div style="display: flex; gap: 8px;">
+      <button class="btn btn-sync" onclick="forceSyncDefaultGames()" title="Perbarui daftar game bawaan">🔄 Segarkan</button>
       <button id="btnAdd" class="btn btn-add" onclick="openAddModal()">➕ Tambah Game</button>
       <button id="btnToggleAdmin" class="btn btn-admin" onclick="openPinModal()">🔐 Mode Guru</button>
     </div>
   </header>
 
   <div class="container">
-    <!-- HERO BANNER -->
     <div class="hero">
       <div class="hero-text">
         <h2>Selamat Datang di Arena Belajar! 🚀</h2>
@@ -323,7 +328,6 @@
       <div class="hero-icon">🏆</div>
     </div>
 
-    <!-- PENCARIAN & FILTER -->
     <div class="toolbar">
       <div class="filter-tabs">
         <button class="tab-btn active" onclick="setFilter('all', this)">Semua</button>
@@ -335,7 +339,6 @@
       </div>
     </div>
 
-    <!-- GRID KARTU GAME -->
     <div id="gamesGrid" class="grid"></div>
   </div>
 
@@ -397,7 +400,6 @@
   </div>
 
   <script>
-    // Koleksi game bawaan (Sudah berisi Kristal Angka, PELITA, dan Lab Warna)
     var initialGames = [
       {
         id: "kristal-angka",
@@ -414,7 +416,7 @@
         title: "PELITA",
         category: "math",
         categoryText: "Matematika",
-        desc: "Membantu murid memahami soal cerita tentang pecahan secara visual dan menyenangkan.",
+        desc: "Membantu Murid memahami soal cerita tentang pecahan",
         url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
       },
       {
@@ -432,28 +434,36 @@
     var isTeacherMode = false;
     var currentFilter = 'all';
 
-    // Inisialisasi awal
     function init() {
       if (!localStorage.getItem('guru_pin_kunci')) {
         localStorage.setItem('guru_pin_kunci', '1234');
       }
 
-      // Gunakan v3 untuk memastikan data lama di HP/laptop tereset ke 3 game ini
-      var saved = localStorage.getItem('portal_games_list_data_v3');
-      if (saved) {
+      // Gabungkan daftar bawaan dengan game buatan pengguna agar daftar default tidak pernah hilang
+      var savedCustom = localStorage.getItem('portal_user_custom_games');
+      var customGames = [];
+      if (savedCustom) {
         try {
-          gamesList = JSON.parse(saved);
+          customGames = JSON.parse(savedCustom);
         } catch(e) {
-          gamesList = initialGames;
+          customGames = [];
         }
-      } else {
-        gamesList = initialGames;
       }
 
+      // Default games selalu dimuat pertama
+      gamesList = initialGames.concat(customGames);
       renderGames();
     }
 
-    // Render daftar game
+    function forceSyncDefaultGames() {
+      localStorage.removeItem('portal_games_list_data');
+      localStorage.removeItem('portal_games_list_data_v2');
+      localStorage.removeItem('portal_games_list_data_v3');
+      gamesList = [...initialGames];
+      renderGames();
+      showToast('Daftar game berhasil disegarkan! 🚀');
+    }
+
     function renderGames() {
       var grid = document.getElementById('gamesGrid');
       var search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -471,6 +481,7 @@
       }
 
       filtered.forEach(function(g) {
+        var isCustom = !initialGames.some(function(initG) { return initG.id === g.id; });
         var card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = 
@@ -486,7 +497,7 @@
             '<button class="btn btn-play" onclick="launchGame(\'' + g.url + '\')">▶ Mainkan Game</button>' +
             '<div class="card-admin-actions" style="display:' + (isTeacherMode ? 'flex' : 'none') + ';">' +
               '<button class="btn btn-edit" onclick="editGame(\'' + g.id + '\')">✏️ Edit</button>' +
-              '<button class="btn btn-delete" onclick="deleteGameItem(\'' + g.id + '\')">🗑️ Hapus</button>' +
+              (isCustom ? '<button class="btn btn-delete" onclick="deleteGameItem(\'' + g.id + '\')">🗑️ Hapus</button>' : '') +
             '</div>' +
           '</div>';
         grid.appendChild(card);
@@ -509,7 +520,6 @@
       renderGames();
     }
 
-    // Modal Control
     function openModal(id) {
       document.getElementById(id).style.display = 'flex';
     }
@@ -517,7 +527,6 @@
       document.getElementById(id).style.display = 'none';
     }
 
-    // PIN Mode Guru
     function openPinModal() {
       if (isTeacherMode) {
         logoutAdmin();
@@ -556,7 +565,6 @@
       showToast('Keluar dari Mode Guru.');
     }
 
-    // Ganti PIN
     function openChangePin() {
       document.getElementById('oldPinInput').value = '';
       document.getElementById('newPinInput').value = '';
@@ -582,7 +590,6 @@
       showToast('PIN baru berhasil disimpan! 🔑');
     }
 
-    // Tambah / Edit Game
     function openAddModal() {
       document.getElementById('gameId').value = '';
       document.getElementById('gameEmoji').value = '🎮';
@@ -628,14 +635,19 @@
         url: url
       };
 
-      if (id) {
-        var idx = gamesList.findIndex(function(g) { return g.id === id; });
-        if (idx > -1) gamesList[idx] = dataObj;
+      var idx = gamesList.findIndex(function(g) { return g.id === id; });
+      if (idx > -1) {
+        gamesList[idx] = dataObj;
       } else {
-        gamesList.unshift(dataObj);
+        gamesList.push(dataObj);
       }
 
-      localStorage.setItem('portal_games_list_data_v3', JSON.stringify(gamesList));
+      // Simpan custom game saja ke storage
+      var customOnly = gamesList.filter(function(g) {
+        return !initialGames.some(function(initG) { return initG.id === g.id; });
+      });
+      localStorage.setItem('portal_user_custom_games', JSON.stringify(customOnly));
+
       closeModal('formModal');
       renderGames();
       showToast('Game berhasil disimpan! ✨');
@@ -643,12 +655,14 @@
 
     function deleteGameItem(id) {
       gamesList = gamesList.filter(function(g) { return g.id !== id; });
-      localStorage.setItem('portal_games_list_data_v3', JSON.stringify(gamesList));
+      var customOnly = gamesList.filter(function(g) {
+        return !initialGames.some(function(initG) { return initG.id === g.id; });
+      });
+      localStorage.setItem('portal_user_custom_games', JSON.stringify(customOnly));
       renderGames();
       showToast('Game telah dihapus.');
     }
 
-    // Toast
     function showToast(msg) {
       var t = document.getElementById('toast');
       t.textContent = msg;
