@@ -374,7 +374,7 @@
       <h3 id="formTitle" style="font-size:18px; margin-bottom:12px;">Tambah Game</h3>
       <input type="hidden" id="gameId">
       
-      <label style="font-size:12px; font-weight:700;">Ikon Emoji (cth: 💡 / 💎 / 🧪)</label>
+      <label style="font-size:12px; font-weight:700;">Ikon Emoji (cth: 💡 / 💎 / 🧪 / 🎨)</label>
       <input type="text" id="gameEmoji" value="🎮">
 
       <label style="font-size:12px; font-weight:700;">Judul Game</label>
@@ -416,8 +416,17 @@
         title: "PELITA",
         category: "math",
         categoryText: "Matematika",
-        desc: "Membantu Murid memahami soal cerita tentang pecahan",
-        url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
+        desc: "Membantu Murid memahami soal cerita tentang pecahan secara visual dan interaktif.",
+        url: "https://script.google.com/macros/s/AKfycbzp9GkUQV2OUG2mAt3RRJ8p11Aeng1Pw1vuRQlRpDnqBK0mMnwiCHKUqbBrebCN4BpEBA/exec"
+      },
+      {
+        id: "game-komica",
+        emoji: "🎨",
+        title: "KOMICA",
+        category: "science",
+        categoryText: "IPA / Sains",
+        desc: "Media komik interaktif edukatif yang seru untuk memperkuat pemahaman konsep pembelajaran.",
+        url: "https://script.google.com/a/macros/admin.sd.belajar.id/s/AKfycbyTdQ9NkqKy8qoDaqNVpJeqhbHzDLD3WpYS45AzbqgfbIZk3x5X-YMTQUF-XWtjF24/exec"
       },
       {
         id: "lab-warna",
@@ -439,7 +448,6 @@
         localStorage.setItem('guru_pin_kunci', '1234');
       }
 
-      // Gabungkan daftar bawaan dengan game buatan pengguna agar daftar default tidak pernah hilang
       var savedCustom = localStorage.getItem('portal_user_custom_games');
       var customGames = [];
       if (savedCustom) {
@@ -450,12 +458,13 @@
         }
       }
 
-      // Default games selalu dimuat pertama
+      // Daftar bawaan selalu termuat lebih dulu
       gamesList = initialGames.concat(customGames);
       renderGames();
     }
 
     function forceSyncDefaultGames() {
+      localStorage.removeItem('portal_user_custom_games');
       localStorage.removeItem('portal_games_list_data');
       localStorage.removeItem('portal_games_list_data_v2');
       localStorage.removeItem('portal_games_list_data_v3');
@@ -642,7 +651,6 @@
         gamesList.push(dataObj);
       }
 
-      // Simpan custom game saja ke storage
       var customOnly = gamesList.filter(function(g) {
         return !initialGames.some(function(initG) { return initG.id === g.id; });
       });
